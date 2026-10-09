@@ -1,0 +1,1308 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6A3DB3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Decreta">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Decreta · Práctica diaria de metafísica</title>
+<meta name="description" content="Decretos, oraciones y herramientas para practicar metafísica cada día.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap">
+<style>
+/* Layout: app de una columna para móvil, barra inferior fija; violeta y oro */
+:root{
+  --bg:#F4F1F9; --surface:#FFFFFF; --sunk:#EAE4F3; --ink:#221A35; --muted:#6B6280;
+  --line:#DDD5EA; --violet:#6A3DB3; --violet-soft:#EFE7FB; --gold:#A87A1F; --gold-soft:#F7EED9;
+  --ok:#2F8A5B;
+  --display:"Marcellus", "Cormorant Garamond", Georgia, serif;
+  --body:"Nunito Sans", -apple-system, "Segoe UI", Roboto, sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#130F1D; --surface:#1D1730; --sunk:#251E3B; --ink:#EEE8F8; --muted:#A79DC0;
+  --line:#33294D; --violet:#B497F0; --violet-soft:#2A2147; --gold:#E3BC63; --gold-soft:#2E2618; --ok:#6CC596; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1730; --sunk:#251E3B; --ink:#EEE8F8; --muted:#A79DC0;
+  --line:#33294D; --violet:#B497F0; --violet-soft:#2A2147; --gold:#E3BC63; --gold-soft:#2E2618; --ok:#6CC596; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+main{max-width:640px;margin:0 auto;padding-inline:16px;padding-block:18px 110px}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:1.9rem;line-height:1.15}
+h2{font-size:1.4rem;line-height:1.2}
+h3{font-size:1.15rem}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:6px}
+.stack{display:flex;flex-direction:column;gap:14px}
+.stack-lg{display:flex;flex-direction:column;gap:26px}
+.eyebrow{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.muted{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.small{font-size:.9rem}
+.quote{font-family:var(--display);font-size:1.25rem;line-height:1.4}
+.decree{font-family:var(--display);font-size:1.22rem;line-height:1.5;white-space:pre-line}
+.texto p+p{margin-top:.8em}
+.texto{white-space:normal}
+
+/* Botón principal */
+.big-no{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:0;border-radius:18px;padding:18px;
+  background:var(--violet);color:#fff}
+:root[data-theme="dark"] .big-no{color:#170F28}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .big-no{color:#170F28}}
+.big-no .flame{flex:none;width:46px;height:46px}
+.big-no b{font-family:var(--display);font-weight:400;font-size:1.45rem;display:block;line-height:1.1}
+.big-no span{font-size:.9rem;opacity:.85}
+
+/* Cualidad del día */
+.ray{position:relative;overflow:hidden;padding-left:22px}
+.ray::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--ray)}
+.ray dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:10px 0 0;font-size:.92rem}
+.ray dt{color:var(--muted)} .ray dd{margin:0}
+
+/* Rutina */
+.routine-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.prog{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.item{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.item:first-of-type{border-top:0}
+.check{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--line);background:transparent;display:grid;place-items:center}
+.check.on{background:var(--violet);border-color:var(--violet)}
+.check.on::after{content:"";width:9px;height:15px;border:solid var(--surface);border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-2px)}
+.item .lbl{flex:1;min-width:0;text-align:left;background:none;border:0;padding:0}
+.item .lbl small{display:block;color:var(--muted);font-size:.82rem}
+.item.done .lbl{color:var(--muted)}
+
+/* chips y listas */
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:.9rem}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.sit{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:14px;text-align:left;min-height:92px;display:flex;flex-direction:column;gap:4px}
+.sit b{font-weight:700;line-height:1.25}
+.sit small{color:var(--muted);font-size:.82rem;line-height:1.3}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 16px;font-weight:700}
+.btn.primary{background:var(--violet);border-color:var(--violet);color:var(--surface)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--surface)}
+.btn.ghost{background:transparent}
+.btn.full{width:100%}
+input[type=text],input[type=date],input[type=time],textarea,select{width:100%;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
+textarea{min-height:90px;resize:vertical}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:.9rem;color:var(--muted)}
+
+.dec{border-bottom:1px solid var(--line);padding:14px 0}
+.dec-h{display:flex;gap:10px;align-items:flex-start}
+.dec-h button.t{flex:1;min-width:0;text-align:left;border:0;background:none;padding:0}
+.dec-h .t b{display:block;font-weight:700}
+.dec-h .t small{color:var(--muted);font-size:.8rem}
+.star{border:0;background:none;font-size:1.35rem;line-height:1;color:var(--muted);padding:2px 4px}
+.star.on{color:var(--gold)}
+.dec .body{margin-top:12px;padding:14px;background:var(--sunk);border-radius:12px}
+
+/* Hoja (modal) */
+.sheet-wrap{position:fixed;inset:0;background:rgba(10,6,20,.55);display:flex;align-items:flex-end;justify-content:center;z-index:50}
+.sheet{background:var(--bg);width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;
+  padding:18px 16px calc(24px + env(safe-area-inset-bottom,0px))}
+.sheet-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;position:sticky;top:-18px;background:var(--bg);padding-top:4px;padding-bottom:8px;z-index:1}
+.x{border:0;background:var(--sunk);border-radius:50%;width:38px;height:38px;font-size:1.2rem;flex:none}
+
+.step{border-left:2px solid var(--line);padding:0 0 18px 18px;position:relative}
+.step::before{content:attr(data-n);position:absolute;left:-14px;top:0;width:26px;height:26px;border-radius:50%;background:var(--surface);border:2px solid var(--violet);color:var(--violet);font-size:.8rem;font-weight:700;display:grid;place-items:center}
+.step.last{border-left-color:transparent}
+.say{font-family:var(--display);font-size:2rem;color:var(--violet);line-height:1.1}
+.note{background:var(--gold-soft);border-radius:12px;padding:12px 14px;font-size:.93rem}
+
+/* nav */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);
+  padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;z-index:40}
+nav.tabs .in{display:grid;grid-template-columns:repeat(5,1fr);width:100%;max-width:640px}
+nav.tabs button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.72rem;color:var(--muted);padding:6px 0}
+nav.tabs button svg{width:24px;height:24px}
+nav.tabs button.on{color:var(--violet);font-weight:700}
+nav.tabs button.center svg{width:30px;height:30px}
+
+/* meditación */
+.orb{width:min(70vw,260px);aspect-ratio:1;border-radius:50%;margin:10px auto;display:grid;place-items:center;text-align:center;
+  background:radial-gradient(circle at 50% 45%, var(--gold-soft), var(--violet-soft) 70%);border:2px solid var(--line);position:relative}
+.orb .n{font-family:var(--display);font-size:3rem;font-variant-numeric:tabular-nums}
+.orb.breath{animation:br 6s ease-in-out infinite}
+@keyframes br{50%{transform:scale(1.05)}}
+@media (prefers-reduced-motion:reduce){.orb.breath{animation:none}}
+.phase{display:flex;gap:6px;justify-content:center}
+.phase i{width:40px;height:5px;border-radius:3px;background:var(--line)}
+.phase i.on{background:var(--violet)}
+
+.wish{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line)}
+.wish:first-child{border-top:0}
+.wish p{flex:1;min-width:0}
+.wish.done p{text-decoration:line-through;color:var(--muted)}
+.del{border:0;background:none;color:var(--muted);font-size:.85rem;padding:4px}
+.tile{display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;width:100%;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:14px 16px}
+.tile b{display:block;font-weight:700}
+.tile small{color:var(--muted);font-size:.84rem;display:block}
+.tile .arr{color:var(--muted);flex:none}
+.num{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:start;padding:12px 0;border-top:1px solid var(--line)}
+.num:first-child{border-top:0}
+.num .v{font-family:var(--display);font-size:2rem;color:var(--violet);text-align:center;line-height:1}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:.92rem;z-index:60;max-width:90vw;text-align:center}
+.counter{font-family:var(--display);font-size:2.4rem;color:var(--violet);font-variant-numeric:tabular-nums;line-height:1}
+.hr{height:1px;background:var(--line)}
+.mood{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.mood button{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+.mood button i{width:14px;height:14px;border-radius:50%;display:block}
+.mood button b{font-size:.86rem;line-height:1.15}
+.mood button small{font-size:.7rem;color:var(--muted);line-height:1.2}
+.mood button.on{border-color:var(--violet);box-shadow:0 0 0 2px var(--violet) inset}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;font-size:.72rem;color:var(--muted)}
+.week span i{display:block;width:16px;height:16px;border-radius:50%;margin:4px auto 0;background:var(--line)}
+.m-paz{background:#3E9E6A}.m-prisa{background:#D9A62B}.m-temor{background:#7B4FC4}.m-bajo{background:#5A6FA8}
+.banner{display:flex;gap:12px;align-items:center;background:var(--gold-soft);border-radius:var(--r);padding:12px 14px}
+.banner p{flex:1;min-width:0;font-size:.95rem}
+details.why{background:var(--violet-soft);border-radius:12px;padding:10px 14px}
+details.why summary{cursor:pointer;font-weight:700;font-size:.92rem;color:var(--violet)}
+details.why p{margin-top:8px;font-size:.93rem}
+details.gl{border-top:1px solid var(--line);padding:12px 0}
+details.gl:first-child{border-top:0}
+details.gl summary{cursor:pointer;list-style:none}
+details.gl summary::-webkit-details-marker{display:none}
+details.gl summary b{display:block}
+details.gl summary small{color:var(--muted);font-size:.84rem}
+details.gl .texto{margin-top:10px;font-size:.95rem}
+.pract{margin-top:10px;padding:10px 12px;border-left:3px solid var(--gold);background:var(--gold-soft);border-radius:0 10px 10px 0;font-size:.92rem}
+.share{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;font-family:var(--body);font-size:.9rem}
+.share a,.share button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 12px;color:var(--ink);text-decoration:none;font-weight:700;font-size:.88rem}
+details.ctx{background:var(--violet-soft);border-radius:var(--r);padding:12px 14px}
+details.ctx summary{cursor:pointer;list-style:none;display:flex;flex-direction:column;gap:2px}
+details.ctx summary::-webkit-details-marker{display:none}
+details.ctx summary span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--violet)}
+details.ctx summary span::after{content:" ▾"}
+details.ctx[open] summary span::after{content:" ▴"}
+details.ctx summary b{font-weight:700}
+details.ctx .texto{margin-top:10px;font-size:.95rem}
+.dctx{display:grid;gap:8px;font-size:.92rem;font-family:var(--body);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:12px}
+.dctx b{color:var(--violet)}
+.vrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;font-family:var(--body)}
+.vbtn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 12px;font-weight:700;font-size:.88rem;color:var(--ink)}
+.vbtn.play{background:var(--violet);border-color:var(--violet);color:var(--surface)}
+.vbtn.rec{color:#B8323F}
+.vbtn.rec.on{background:#B8323F;color:#fff;border-color:#B8323F}
+#player{position:fixed;left:0;right:0;bottom:calc(64px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;z-index:45;padding-inline:12px}
+#player .in{display:flex;align-items:center;gap:10px;width:100%;max-width:616px;background:var(--ink);color:var(--bg);border-radius:14px;padding:10px 12px}
+#player .in p{flex:1;min-width:0;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#player button{border:0;border-radius:10px;padding:8px 12px;font-weight:700;background:var(--bg);color:var(--ink)}
+.curso{display:flex;flex-direction:column;gap:8px;padding:12px 0;border-top:1px solid var(--line)}
+.curso:first-of-type{border-top:0}
+.npos{border-top:1px solid var(--line);padding:16px 0}
+.npos:first-child{border-top:0;padding-top:4px}
+.npos .hd{display:flex;gap:14px;align-items:center}
+.npos .v{font-family:var(--display);font-size:2.4rem;color:var(--violet);line-height:1;min-width:52px;text-align:center}
+.three{display:grid;gap:6px;margin-top:8px;font-size:.9rem}
+.three p b{display:inline-block;min-width:96px}
+.theme-t{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:.82rem}
+</style>
+</head>
+<body>
+
+
+<main id="app"></main>
+<nav class="tabs" aria-label="Secciones"><div class="in" id="tabs"></div></nav>
+<div id="layer"></div>
+<div id="player" hidden></div>
+
+<script>
+// Decreta · contenido original. Citas bíblicas: Reina-Valera 1909 (dominio público).
+
+window.FORMULA = {
+  recordar: "Antes de nada, recuerda quién eres. Tu verdadero ser, el YO SOY que vive en ti, no se enferma, no envejece, no tiene miedo y no carece de nada. Lo que estás viviendo ahora es una apariencia pasajera, no tu verdad. Tu verdad es luz, paz, salud y abundancia.",
+  noacepto: "No hace falta gritar ni apretar los dientes. Dilo con tranquilidad y seguridad, como quien rechaza algo que no ha pedido: sin enfado y sin miedo, pero sin dudar.",
+  despues: "Una vez hecho, cuida lo que piensas y lo que dices. No vuelvas a describir el problema ni a dudar de lo que declaraste: cada vez que lo cuentas, le devuelves la fuerza que le acabas de quitar.",
+  yaEnMarcha: "LO QUE DECLARÉ YA ESTÁ OBRANDO. LO SUELTO CON CONFIANZA Y DOY LAS GRACIAS."
+};
+
+window.SITUACIONES = [
+  { id:"enfermedad", titulo:"Enfermedad o malestar", sub:"Propia o de alguien querido", verdad:"Vida y salud",
+    decreto:"Esta molestia no es la verdad de mi cuerpo. La Vida que me sostiene es sana, sabia y fuerte, y cada célula de mi cuerpo la conoce. YO SOY vida en orden. YO SOY salud que se renueva ahora mismo. Bendigo mi cuerpo y lo devuelvo a su armonía.",
+    extra:["Si es por otra persona, di su nombre: “La Vida en [nombre] es sana y fuerte. Su cuerpo recuerda su armonía.”",
+      "Seguir el tratamiento médico no va en contra de esta práctica. Bendice al médico, la medicina y a quien te cuida: también son caminos por los que llega el bien."] },
+  { id:"temor", titulo:"Miedo", sub:"Propio o de alguien", verdad:"Fe y confianza",
+    decreto:"El miedo no viene de Dios y no tiene raíz en mí. Lo miro, le doy las gracias por avisarme y lo dejo marchar. Pertenezco a un Amor que me cuida. YO SOY confianza tranquila. Donde estoy yo, está Dios, y donde está Dios no falta nada.",
+    extra:["Dilo aunque te tiemble la voz. Precisamente entonces es cuando más sirve.",
+      "“En amor no hay temor; mas el perfecto amor echa fuera el temor” (1 Juan 4:18)."] },
+  { id:"tristeza", titulo:"Tristeza o desánimo", sub:"Pena, bajón", verdad:"Alegría",
+    decreto:"Esta tristeza es una nube, no es el cielo. Detrás de ella mi alegría sigue intacta. YO SOY alegría que vuelve. YO SOY luz que se abre paso. Hoy elijo mirar lo que sí tengo, y empiezo a nombrarlo ahora mismo.",
+    enumerar:true,
+    extra:["La gratitud cambia el ánimo más rápido que cualquier razonamiento. Empieza por lo pequeño: el agua caliente, una voz conocida, tus propias manos."] },
+  { id:"escasez", titulo:"Falta de dinero", sub:"Deudas, aprieto", verdad:"Abundancia",
+    decreto:"La escasez es una apariencia, no mi destino. Vivo en un universo generoso que nunca se queda sin recursos. YO SOY un canal abierto para el bien. El dinero llega a mí por caminos conocidos y por caminos nuevos, en armonía con todos. Hoy tengo lo que necesito, y mañana también.",
+    extra:["Bendice cada pago que haces: “Que esto vuelva multiplicado a quien lo recibe y a mí”.",
+      "Deja de decir “no me alcanza” o “no hay dinero”. Di: “Todavía no lo veo, pero ya viene”."] },
+  { id:"inarmonia", titulo:"Discusión o conflicto", sub:"Pelea, tensión, choque", verdad:"Armonía",
+    decreto:"En el fondo de esta situación hay paz, aunque ahora no la vea. La misma Vida que está en mí está en la otra persona, y no puede pelearse consigo misma. YO SOY armonía. Bendigo a quien tengo enfrente y bendigo la solución que ya existe.",
+    extra:["Antes de responder, respira tres veces y di por dentro: “Bendigo la salida que todavía no veo”."] },
+  { id:"falta", titulo:"Necesito algo ahora", sub:"Una solución, un objeto, una idea", verdad:"Provisión",
+    decreto:"Lo que necesito ya existe y ya viene hacia mí. No me falta nada que de verdad me corresponda. YO SOY apertura a la respuesta justa, en el momento justo.",
+    extra:["Después, deja de buscar con ansiedad. La respuesta suele aparecer cuando sueltas: una idea, una llamada, alguien que te lo ofrece."] },
+  { id:"perdido", titulo:"Perdí algo", sub:"Extravío o robo", verdad:"Lo mío vuelve",
+    decreto:"Nada de lo que me pertenece de verdad puede perderse. Lo que es mío vuelve a mí, o llega algo igual o mejor. YO SOY orden, y en el orden todo está en su sitio.",
+    extra:["Quédate con calma y no repitas la historia de la pérdida. Cuando aparezca, vuelve a dar las gracias."] },
+  { id:"resentimiento", titulo:"Rencor hacia alguien", sub:"Resentimiento, ganas de devolverla", verdad:"Libertad",
+    decreto:"Piensa a propósito en algo bueno de esa persona: un gesto amable, un momento compartido, algo que te hizo reír. No tienes que justificar lo que hizo. Solo te estás devolviendo la paz a ti.",
+    recordar:true,
+    extra:["“Te dejo ir en paz. Lo que pasó ya no me ata. Al soltarte a ti, me suelto yo.”",
+      "No hace falta sentir cariño todavía. Basta con la intención de soltar.",
+      "Si el rencor vuelve, repite el ejercicio. Cada vez pesa menos."] },
+  { id:"dano", titulo:"Alguien me hace daño", sub:"Ataque, injusticia", verdad:"Protección",
+    decreto:"Me rodeo de luz, y nada que venga a dañarme puede atravesarla. Le hablo a lo mejor que hay en esta persona: sé que en el fondo es capaz de justicia y de bondad, y eso es lo que llamo ahora. YO SOY paz protegida.",
+    extra:["Perdonar no es permitir. Pon límites con calma y defiende lo tuyo sin violencia.",
+      "Si estás en peligro, pide ayuda de inmediato. La oración te acompaña, no sustituye a protegerte."] },
+  { id:"preocupacion", titulo:"Preocupación", sub:"Algo me angustia", verdad:"Confianza",
+    decreto:"Ahora mismo parece grande, pero no es más grande que el bien que me rodea. Lo pongo en manos de Dios y dejo de darle vueltas. YO SOY calma. La solución ya está en camino.",
+    extra:["Preocuparse es imaginar lo peor con todo detalle. Usa esa misma imaginación al revés: imagina con detalle cómo sería que saliera bien."] },
+  { id:"recaida", titulo:"El problema volvió", sub:"Después de haberlo trabajado", verdad:"Firmeza",
+    decreto:"Lo que declaré sigue en pie. Esta vuelta atrás es solo el eco de lo viejo que se va. Me perdono por haber dudado y vuelvo a mi palabra. YO SOY firmeza serena. Lo bueno sigue obrando.",
+    aviso:"Dilo una sola vez, con calma, y vuelve a lo tuyo.",
+    extra:["No le cuentes a nadie cómo era el problema. Al describirlo otra vez, lo vuelves a construir."] },
+  { id:"negativo", titulo:"Dije algo negativo", sub:"Se me escapó", verdad:"Palabra nueva",
+    decreto:"Retiro lo que acabo de decir. No lo quiero para mí ni para nadie. Lo cambio por esto: solo el bien tiene poder en mi vida. YO SOY palabra que construye.",
+    registra:true,
+    extra:["Cada frase negativa que te pillas te enseña una creencia vieja. Darte cuenta ya es la mitad del cambio.",
+      "No te castigues. Corregir es suficiente."] },
+  { id:"muerte", titulo:"Pensamiento de desgracia", sub:"Una idea fea que llega sola", verdad:"Paz",
+    decreto:"No, gracias. Esa idea no es mía y no la recibo. Vuelvo a la paz.",
+    extra:["Despídela con calma, como a quien llama a la puerta equivocada, y ponte a pensar en otra cosa.",
+      "Por tus seres queridos: “Cada uno de los míos está cuidado y vivirá plenamente todo lo que vino a vivir”."] },
+  { id:"catastrofe", titulo:"Noticias que asustan", sub:"Desastres, alarmas, cadenas", verdad:"Calma",
+    decreto:"No hago mío el miedo de afuera, ni para mí ni para los míos. Me quedo con la paz y la envío a donde haga falta.",
+    extra:["No reenvíes mensajes de miedo. Si quieres ayudar, envía una bendición en su lugar."] },
+  { id:"malhumor", titulo:"Mal humor", sub:"Irritación, amargura", verdad:"Alegría",
+    decreto:"YO SOY más grande que este enfado. Elijo volver a mi alegría.",
+    extra:["Sonríe aunque no tengas ganas. El cuerpo arrastra al ánimo.",
+      "Nombra en voz alta cinco cosas que tienes y agradécelas una por una."] },
+  { id:"cola", titulo:"Atascos y retrasos", sub:"Tráfico, esperas, colas", verdad:"Fluidez",
+    decreto:"Todo en la vida circula: la sangre, el agua, el tiempo. Este camino también se abre. YO SOY fluidez y llego a tiempo a lo que me corresponde.",
+    extra:["Para aparcar o encontrar sitio: “Hay un lugar para mí, en armonía con todos. Gracias, ya lo veo”."] },
+  { id:"duda", titulo:"Dudo de que funcione", sub:"Impaciencia, no llega", verdad:"Ya está en marcha",
+    decreto:"LO QUE DECLARÉ YA ESTÁ OBRANDO. LO SUELTO CON CONFIANZA Y DOY LAS GRACIAS.",
+    extra:["Una semilla no crece antes por desenterrarla cada día para mirarla. Siembra, riega con gratitud y espera.",
+      "Tener fe no es esperar con miedo. Es esperar con alegría."] },
+  { id:"pazmundial", titulo:"Por la paz del mundo", sub:"Guerras, violencia", verdad:"Paz",
+    decreto:"Envío paz a cada lugar donde hay violencia. La paz es más fuerte que el odio, porque es la naturaleza de Dios. Que cada corazón recuerde su bondad. Así sea.",
+    extra:[] }
+];
+
+window.FRASES_NEGATIVAS = [
+  "No me alcanza el dinero","Todo me sale mal","Siempre me pasa lo mismo","Estoy harta de todo",
+  "Me muero de cansancio","Me va a dar algo","Esto es imposible","Con la suerte que tengo...",
+  "Con esta cabeza mía...","Mi espalda de siempre...","No sirvo para esto","La gente es muy mala",
+  "Ya no tengo edad para eso","Ojalá no pase nada malo","Seguro que me lo roban","Eso no es para gente como yo",
+  "Ya me lo veía venir","Hay que aguantarse","Nadie me ayuda","Cuando todo va bien, algo se tuerce"
+];
+
+window.DECRETOS = [
+ {id:"despertar", cat:"Al despertar", t:"Primer pensamiento del día", f:"Al abrir los ojos",
+  x:"Antes de mirar el móvil y antes de pensar en lo que hay que hacer:\n\nBUENOS DÍAS, PADRE. ESTE DÍA ES TUYO Y ES MÍO. YO SOY LUZ QUE DESPIERTA. CAMINO HOY DE TU MANO, EN PAZ."},
+ {id:"luz", cat:"Al despertar", t:"Luz interior", f:"Cada mañana",
+  x:"Pon la mano en el pecho y respira despacio.\n\nYO SOY LA PRESENCIA DE DIOS EN ACCIÓN. NO TENGO EDAD NI LÍMITE. MI LUZ ALCANZA A TODO LO QUE TOQUE HOY, Y TODO LO QUE TOCO QUEDA MEJOR DE LO QUE ESTABA."},
+ {id:"escudo", cat:"Al despertar", t:"Escudo de luz", f:"Protección diaria",
+  x:"UNA LUZ BLANCA Y DORADA ME ENVUELVE DE PIES A CABEZA. DENTRO DE ELLA SOLO ENTRA EL BIEN. NADA NEGATIVO ME ALCANZA, NI HOY NI NUNCA. YO SOY PROTECCIÓN DIVINA EN MOVIMIENTO."},
+ {id:"cubierto", cat:"Al despertar", t:"Hoy no me falta nada", f:"Contra la preocupación",
+  x:"HOY NO ME FALTA NADA. LO QUE ESTE DÍA PIDA, ESTE DÍA LO TRAE. GRACIAS, PADRE.\n\n“Basta al día su afán” (Mateo 6:34)."},
+ {id:"compromisos", cat:"Al despertar", t:"Siete compromisos para hoy", f:"La actitud del día",
+  x:"HOY...\n\n1. Hablo solo de lo que quiero ver crecer.\n2. Trato a cada persona como alguien valioso.\n3. Busco lo bueno escondido en lo que pase.\n4. Me alegro del bien ajeno como del mío.\n5. Suelto los errores de ayer y empiezo de nuevo.\n6. Sonrío más de lo que me quejo.\n7. Cuido mi paz como cuido mi casa."},
+
+ {id:"pausa", cat:"Durante el día", t:"Pausa de un minuto", f:"En medio del día",
+  x:"Para lo que estás haciendo. Respira tres veces.\n\nAQUÍ Y AHORA, TODO ESTÁ BIEN. YO SOY PAZ EN MEDIO DEL DÍA."},
+ {id:"ofrecer", cat:"Durante el día", t:"Ofrecer lo que hago", f:"Antes de una tarea",
+  x:"Antes de empezar cualquier tarea, también las que no te gustan:\n\nPONGO ESTO EN MANOS DE DIOS. QUE MI TRABAJO SEA LUZ PARA QUIEN LO RECIBA."},
+ {id:"saludo", cat:"Durante el día", t:"Saludar con bendición", f:"Con cada persona",
+  x:"Cuando saludes a alguien —en la tienda, en el trabajo, en el autobús— piensa por dentro:\n\nQUE TE VAYA BIEN. VEO LO MEJOR DE TI."},
+ {id:"bendecir", cat:"Durante el día", t:"Bendecir lo que pasa", f:"Ante algo desagradable",
+  x:"AQUÍ TAMBIÉN HAY ALGO BUENO. LO BENDIGO Y LO LLAMO A APARECER."},
+ {id:"orden", cat:"Durante el día", t:"Hablarle a lo que no funciona", f:"Cosas que se atascan",
+  x:"Cuando algo se atasca —un aparato, un trámite, una planta que no crece— háblale con cariño:\n\nLA INTELIGENCIA DIVINA ESTÁ EN TI. VUELVE A TU ORDEN. GRACIAS."},
+ {id:"verdad", cat:"Durante el día", t:"Que salga la verdad", f:"Antes de firmar o decidir",
+  x:"QUE LA VERDAD DE ESTE ASUNTO SE VEA CLARA, PARA BIEN DE TODOS. NADA OCULTO PUEDE PERJUDICARME."},
+ {id:"decision", cat:"Durante el día", t:"Antes de decidir", f:"Cuando no sabes qué hacer",
+  x:"MUÉSTRAME EL CAMINO, PADRE. ABRE LA PUERTA QUE ME CONVIENE Y CIERRA LA QUE NO. ACEPTO TU RESPUESTA CON CONFIANZA."},
+
+ {id:"pedir", cat:"Prosperidad", t:"Cómo pedir un deseo", f:"La fórmula",
+  x:"DESEO [lo que quieras]. QUE LLEGUE EN ARMONÍA CON TODOS, SIN DAÑO PARA NADIE, POR EL CAMINO MÁS PERFECTO. GRACIAS, PADRE, PORQUE YA ESTÁ EN CAMINO.\n\nDespués, suéltalo. No vigiles por dónde va a llegar."},
+ {id:"pidegrande", cat:"Prosperidad", t:"Pide sin miedo", f:"Antes de tu lista",
+  x:"No pidas “aunque sea un poquito”. El bien de Dios no se agota. Pide claro y con detalle: la cantidad, el tipo de trabajo, cómo quieres sentirte. Y empieza tu lista así:\n\nPADRE, PARA MÍ Y PARA TODOS, LO MEJOR QUE TIENES PREPARADO."},
+ {id:"dinero", cat:"Prosperidad", t:"Decreto del dinero", f:"Cada día",
+  x:"EL DINERO ES UNA FORMA DE LA ABUNDANCIA DE DIOS, Y ESA ABUNDANCIA CIRCULA LIBRE HACIA MÍ. RECIBO CON GRATITUD, GASTO CON ALEGRÍA Y SIEMPRE QUEDA DE SOBRA. YO SOY PROSPERIDAD EN ACCIÓN."},
+ {id:"cuentas", cat:"Prosperidad", t:"Para pagar las cuentas", f:"Facturas y deudas",
+  x:"CADA CUENTA QUE LLEGA TRAE YA EL DINERO PARA PAGARSE. PAGO CON TRANQUILIDAD Y BENDIGO A QUIEN RECIBE. EN MI CASA SIEMPRE HAY SUFICIENTE, Y SOBRA."},
+ {id:"negocio", cat:"Prosperidad", t:"Para mi trabajo o negocio", f:"Cada mañana",
+  x:"BENDIGO MI TRABAJO, MI NEGOCIO, MIS CLIENTES Y MI CUENTA. BENDIGO TAMBIÉN A MI COMPETENCIA: HAY PARA TODOS. DIOS ESTÁ EN TODO LO QUE HAGO, Y TODO LO QUE HAGO PROSPERA."},
+ {id:"entrevista", cat:"Prosperidad", t:"Antes de una venta o entrevista", f:"Negociaciones",
+  x:"LA MISMA VIDA ESTÁ EN MÍ Y EN QUIEN TENGO DELANTE. QUE SALGA LO QUE SEA MEJOR PARA LOS DOS. SI ESTA PUERTA NO ES LA MÍA, SE ABRE OTRA MEJOR."},
+
+ {id:"perdonar", cat:"Amor y perdón", t:"Soltar a todos", f:"Perdón completo",
+  x:"SUELTO A CADA PERSONA QUE ME HIRIÓ, SABIENDO O SIN SABER. NO LES GUARDO RENCOR Y NO ME DEBEN NADA. TAMBIÉN ME SUELTO A MÍ. QUEDAMOS LIBRES, EN PAZ."},
+ {id:"yasuelto", cat:"Amor y perdón", t:"Cuando vuelve el recuerdo", f:"Después de perdonar",
+  x:"Si la herida vuelve a tu mente, no empieces de cero. Di solo:\n\nESO YA ESTÁ SUELTO."},
+ {id:"amor", cat:"Amor y perdón", t:"Amor que irradio", f:"Para el día",
+  x:"MI CORAZÓN ESTÁ LLENO DE AMOR Y LO DEJO SALIR SIN MEDIDA. AMO A QUIEN ME QUIERE Y BENDIGO A QUIEN NO. ALLÁ DONDE VOY, LLEVO PAZ. YO SOY AMOR EN ACCIÓN."},
+ {id:"pareja", cat:"Amor y perdón", t:"Para el amor de pareja", f:"Atraer o sanar",
+  x:"EL AMOR QUE ME CORRESPONDE ME RECONOCE Y YO LO RECONOZCO. LLEGA SIN PRISA Y SIN DAÑO, Y SE QUEDA PORQUE ES BUENO PARA LOS DOS."},
+ {id:"familia", cat:"Amor y perdón", t:"Armonía en casa", f:"Familia",
+  x:"EN ESTA CASA VIVE LA PAZ. CADA PERSONA AQUÍ ES ESCUCHADA Y RESPETADA. LAS PALABRAS DURAS SE DISUELVEN Y QUEDA EL CARIÑO."},
+
+ {id:"cuerpo", cat:"Salud", t:"Gracias a mi cuerpo", f:"Bendición del cuerpo",
+  x:"GRACIAS, CUERPO, POR TODO LO QUE HACES SIN QUE TE LO PIDA. TE BENDIGO DE LA CABEZA A LOS PIES. LA VIDA QUE TE ANIMA SABE SANAR, Y YO LA DEJO TRABAJAR."},
+ {id:"renuevo", cat:"Salud", t:"Renovación", f:"Fuerza y ánimo",
+  x:"CADA DÍA MI CUERPO SE RENUEVA. LO VIEJO Y CANSADO SE VA; LLEGAN FUERZA, ÁNIMO Y FRESCURA. YO SOY VIDA QUE NO SE GASTA."},
+
+ {id:"miguel", cat:"Protección", t:"Con el arcángel Miguel", f:"Protección",
+  x:"ARCÁNGEL MIGUEL, PONTE A MI LADO Y AL LADO DE LOS MÍOS. CORTA TODO LO QUE NO VIENE DEL BIEN. CUIDA NUESTROS CAMINOS, NUESTRA CASA Y NUESTRO SUEÑO. GRACIAS."},
+ {id:"casa", cat:"Protección", t:"Luz en la casa", f:"Por la noche",
+  x:"LLENO MI CASA DE LUZ: CADA PUERTA, CADA VENTANA, CADA RINCÓN. QUIEN SE ACERQUE CON MALA INTENCIÓN SE OLVIDA DE ELLA. QUIEN SE ACERQUE CON BIEN, ENCUENTRA PAZ."},
+ {id:"ambiente", cat:"Protección", t:"Ambientes pesados", f:"Lugares o personas que cargan",
+  x:"CIERRO MI ENERGÍA A TODO LO QUE NO ES MÍO. AQUÍ SOLO MANDA EL BIEN. LO QUE NO ES LUZ, SE VA EN PAZ."},
+
+ {id:"violeta", cat:"Luz violeta", t:"Limpieza con luz violeta", f:"Cada día",
+  x:"UNA LUZ VIOLETA ME ATRAVIESA Y LIMPIA TODO LO QUE NO ME SIRVE: RENCORES, MIEDOS, PALABRAS QUE DIJE SIN PENSAR. LO VIEJO SE TRANSFORMA EN LUZ. QUEDA SOLO LO LIMPIO Y LO LIGERO."},
+ {id:"violetarapido", cat:"Luz violeta", t:"Luz violeta al momento", f:"En un instante",
+  x:"LUZ VIOLETA, AHORA. LO TRANSFORMO EN BIEN."},
+ {id:"violetamundo", cat:"Luz violeta", t:"Luz violeta para otros", f:"Servicio",
+  x:"Imagina que respiras luz violeta y que, al soltar el aire, la envías a quien la necesite: una persona, un hospital, un país.\n\nQUE ESTA LUZ LLEGUE A DONDE HAGA FALTA Y LO TRANSFORME TODO EN BIEN. GRACIAS."},
+
+ {id:"porotro", cat:"Por otros", t:"Por alguien que sufre", f:"Enfermedad o problema ajeno",
+  x:"[Nombre], TE ENVÍO LUZ. QUE TU CUERPO SE ALIVIE, QUE TU MENTE DESCANSE Y QUE SIENTAS QUE NO ESTÁS SOLO. LA VIDA EN TI ES MÁS FUERTE QUE CUALQUIER PROBLEMA."},
+ {id:"seresqueridos", cat:"Por otros", t:"Por mi familia", f:"Cuando temes por ellos",
+  x:"CADA PERSONA QUE AMO ESTÁ CUIDADA, GUIADA Y PROTEGIDA. VIVIRÁ PLENAMENTE TODO LO QUE VINO A VIVIR. LAS PONGO EN MANOS DE DIOS."},
+ {id:"partida", cat:"Por otros", t:"Por quien está partiendo", f:"Final de la vida",
+  x:"PADRE, ENVUELVE A ESTA ALMA EN TU PAZ. QUE SU PASO SEA SUAVE Y SIN MIEDO, Y QUE LOS SUYOS SIENTAN CONSUELO."},
+ {id:"nacer", cat:"Por otros", t:"Por un bebé en camino", f:"Embarazo",
+  x:"BENDIGO A ESTE BEBÉ Y A SU MADRE. QUE LLEGUE SANO, A SU TIEMPO, Y QUE TRAIGA A ESTE MUNDO TODA SU LUZ."},
+ {id:"difuntos", cat:"Por otros", t:"Por los que ya se fueron", f:"Duelo",
+  x:"A LOS QUE SE FUERON ANTES QUE YO: LOS RECUERDO CON AMOR Y LOS DEJO IR EN PAZ. QUE ESTÉN EN LA LUZ. LO QUE NOS UNE NO SE ROMPE."},
+
+ {id:"lodesiempre", cat:"Gratitud", t:"Gracias por lo de siempre", f:"Cada día",
+  x:"GRACIAS POR ESTE TECHO. GRACIAS POR EL PLATO EN LA MESA. GRACIAS POR LAS PERSONAS QUE ME QUIEREN. GRACIAS POR MI RESPIRACIÓN, QUE NO HA PARADO NI UN SEGUNDO. TODO ESTO ES UN REGALO."},
+ {id:"graciasantes", cat:"Gratitud", t:"Gracias por adelantado", f:"Para lo que pediste",
+  x:"GRACIAS, PADRE, POR LO QUE AÚN NO VEO PERO YA ESTÁ EN CAMINO. LO RECIBO DESDE AHORA CON ALEGRÍA."},
+ {id:"gracias3", cat:"Gratitud", t:"Tres cosas buenas", f:"Al cerrar el día",
+  x:"Antes de dormir, nombra tres cosas buenas que te pasaron hoy, aunque sean pequeñas. Después di:\n\nGRACIAS. MAÑANA HABRÁ MÁS."},
+
+ {id:"soltar", cat:"Al dormir", t:"Soltar el día", f:"Antes de dormir",
+  x:"LO QUE PASÓ HOY, BUENO O MALO, LO DEJO AQUÍ. PERDONO, ME PERDONO Y DESCANSO. MAÑANA ES UN DÍA NUEVO."},
+ {id:"sueno", cat:"Al dormir", t:"Para dormir en paz", f:"Último pensamiento",
+  x:"MIENTRAS DUERMO, MI CUERPO SE REPARA Y MI MENTE SE ORDENA. QUE MI DESCANSO SIRVA TAMBIÉN PARA EL BIEN DE OTROS. DUERMO EN LA PAZ DE DIOS."},
+
+ {id:"yosoy", cat:"Oraciones", t:"El nombre YO SOY", f:"Éxodo 3:14",
+  x:"“Y respondió Dios a Moisés: YO SOY EL QUE SOY” (Éxodo 3:14).\n\nCada vez que dices “yo soy”, usas ese nombre. Úsalo solo para el bien:\n\nYO SOY SALUD. YO SOY PAZ. YO SOY ABUNDANCIA. YO SOY AMOR. YO SOY LUZ."},
+ {id:"antesorar", cat:"Oraciones", t:"Antes de orar", f:"Cuando dudas de cómo pedir",
+  x:"NO HAY FORMA EQUIVOCADA DE HABLAR CONTIGO, PADRE. TÚ ENTIENDES LO QUE DIGO Y LO QUE NO SÉ DECIR. MI PALABRA SALE CON TU FUERZA Y NO VUELVE VACÍA.\n\n“Así será mi palabra que sale de mi boca: no tornará a mí vacía” (Isaías 55:11)."},
+ {id:"fe", cat:"Oraciones", t:"Cuando falta fe", f:"Marcos 9:24",
+  x:"NO TENGO QUE FABRICAR LA FE: YA ESTÁ EN MÍ, COMO UNA SEMILLA. HOY LA RIEGO.\n\n“Creo, ayuda mi incredulidad” (Marcos 9:24)."},
+ {id:"padrenuestro", cat:"Oraciones", t:"Padre Nuestro", f:"Oración tradicional",
+  x:"Padre nuestro, que estás en el cielo, santificado sea tu Nombre; venga a nosotros tu reino; hágase tu voluntad en la tierra como en el cielo. Danos hoy nuestro pan de cada día; perdona nuestras ofensas, como también nosotros perdonamos a los que nos ofenden; no nos dejes caer en la tentación, y líbranos del mal. Amén.\n\nRézalo despacio, frase a frase, dejando un respiro entre una y otra."},
+ {id:"salmo23", cat:"Oraciones", t:"Salmo 23", f:"Reina-Valera 1909",
+  x:"Jehová es mi pastor; nada me faltará. En lugares de delicados pastos me hará yacer: junto a aguas de reposo me pastoreará. Confortará mi alma; guiaráme por sendas de justicia por amor de su nombre. Aunque ande en valle de sombra de muerte, no temeré mal alguno; porque tú estarás conmigo: tu vara y tu cayado me infundirán aliento. Aderezarás mesa delante de mí, en presencia de mis angustiadores: ungiste mi cabeza con aceite: mi copa está rebosando. Ciertamente el bien y la misericordia me seguirán todos los días de mi vida: y en la casa de Jehová moraré por largos días."},
+ {id:"salmo91", cat:"Oraciones", t:"Salmo 91", f:"Reina-Valera 1909",
+  x:"El que habita en el retiro del Altísimo, morará seguro bajo la sombra del Omnipotente. Yo diré de Jehová: Refugio mío y fortaleza mía. Mi Dios, en Él confiaré. Porque Él te hará escapar del lazo del cazador y de la asoladora pestilencia. Con Sus plumas te cubrirá y debajo de Sus alas te refugiarás: escudo y adarga es Su Verdad. No tendrás temor de espanto nocturno ni de saeta que vuele de día, ni de la pestilencia que anda en las tinieblas, ni de la mortandad que hace estragos al mediodía. Caerán a tu lado mil, y diez mil a tu diestra; pero a ti no te tocará. Tan sólo con tus ojos mirarás la recompensa de los inicuos, por cuanto has dicho: Tú, ¡oh Jehová!, eres mi refugio, y al Altísimo has puesto por tu habitación. No te sucederá mal alguno ni plaga tocará en tu morada, porque dará encargo a sus ángeles acerca de ti para que te guarden en todos tus caminos. Sobre las palmas de sus manos te llevarán para que no tropieces con tu pie en alguna piedra. Pisarás al león y al áspid; hollarás al leoncillo y la serpiente: por cuanto tiene puesto en mí su amor, yo también lo libraré. Le pondré en alto por cuanto ha conocido mi nombre. Él me llamará y yo le responderé. Con él estaré yo en la angustia, le libraré y le glorificaré. De larga vida le hartaré y le mostraré mi salvación."}
+];
+
+window.CTX_DECRETO = {
+ despertar:{p:"El primer pensamiento del día marca el tono de todo lo demás. Si lo das a Dios antes que a las preocupaciones, empiezas desde la paz.", c:"Nada más abrir los ojos, antes del móvil."},
+ luz:{p:"Te recuerda que no eres solo tu cuerpo ni tus problemas: hay una Presencia en ti que actúa a través de lo que haces.", c:"Cada mañana. Y durante el día, si piensas en alguien que necesita ayuda."},
+ escudo:{p:"Imaginar la luz a tu alrededor te da una sensación real de protección y te ayuda a no absorber el ánimo de otros.", c:"Cada mañana, y antes de entrar en un lugar o reunión que te pese."},
+ cubierto:{p:"La mayoría de los miedos son por mañana. Hoy, casi siempre, lo tienes todo. Este decreto te devuelve al presente.", c:"Al despertar, sobre todo si te preocupa el dinero."},
+ compromisos:{p:"Son siete actitudes que, practicadas un día tras otro, cambian cómo te relacionas con todo.", c:"Por la mañana. Léelos despacio y elige uno en el que fijarte hoy."},
+ pausa:{p:"Un minuto de pausa corta la inercia del estrés y te devuelve a tu centro.", c:"A mediodía, o cuando notes prisa o agobio."},
+ ofrecer:{p:"Ofrecer lo que haces le da sentido incluso a las tareas pesadas, y las haces con otro ánimo.", c:"Antes de trabajar, de limpiar, de atender a alguien."},
+ saludo:{p:"Ver lo mejor del otro, aunque sea un desconocido, cambia el trato y te cambia a ti.", c:"Con cada persona con la que te cruces."},
+ bendecir:{p:"Bendecir es decir bien de algo. En lugar de quejarte, buscas lo bueno, y lo que miras crece.", c:"En cualquier situación desagradable o tensa."},
+ orden:{p:"Tratar las cosas con calma en lugar de con rabia te ayuda a encontrar la solución.", c:"Cuando algo no funciona: un aparato, un trámite, una planta."},
+ verdad:{p:"Pides claridad para no decidir a ciegas.", c:"Antes de firmar un contrato, de un trato o si sospechas un engaño."},
+ decision:{p:"Cuando no sabes qué hacer, soltar la decisión en manos de Dios te quita presión y aclara la mente.", c:"Ante cualquier duda importante."},
+ pedir:{p:"“En armonía con todos” asegura que tu bien no llegue a costa de nadie. “Por el camino más perfecto” deja que llegue de la mejor forma. Dar las gracias por adelantado es confiar.", c:"Para pedir cualquier cosa que desees."},
+ pidegrande:{p:"Pedir poco por miedo a molestar te limita. Pedir con claridad y detalle te ayuda a reconocer lo que llega.", c:"Antes de escribir tu lista de deseos."},
+ dinero:{p:"Cambia la relación con el dinero: de miedo y escasez a gratitud y circulación.", c:"Cada mañana, y cuando cobres o pagues."},
+ cuentas:{p:"Pagar con angustia refuerza la sensación de escasez. Pagar bendiciendo cambia la energía con la que vives el dinero.", c:"Cuando llegue una factura o tengas que pagar algo."},
+ negocio:{p:"Bendecir a la competencia te saca de la idea de que no hay para todos.", c:"Cada mañana, antes de abrir o de empezar a trabajar."},
+ entrevista:{p:"Te quita la necesidad de imponerte o de desconfiar. Si no sale, sabes que hay algo mejor.", c:"Antes de una venta, una entrevista, un contrato o una negociación."},
+ perdonar:{p:"Un rencor guardado pesa en todo lo demás. Soltarlo libera espacio para el bien.", c:"Por la noche, antes de dormir."},
+ yasuelto:{p:"Perdonar se hace una vez. Si el recuerdo vuelve, no hace falta empezar de nuevo.", c:"Cada vez que te venga a la mente algo que ya soltaste."},
+ amor:{p:"Irradiar amor de forma consciente cambia tu ánimo y el trato con los demás.", c:"Por la mañana, o cuando notes crítica o rechazo en ti."},
+ pareja:{p:"Declaras el amor que quieres sin forzar a nadie ni rogar.", c:"Si buscas pareja o quieres sanar la relación que tienes."},
+ familia:{p:"Declarar la paz en casa te ayuda a ser tú quien la lleve.", c:"Cuando haya tensión en casa o antes de una conversación difícil."},
+ cuerpo:{p:"El cuerpo responde mejor al agradecimiento que a la queja.", c:"Al ducharte, al acostarte o cuando sientas alguna molestia."},
+ renuevo:{p:"Te recuerda que tu cuerpo se renueva constantemente.", c:"Cuando te notes con poca energía."},
+ miguel:{p:"El arcángel Miguel es, en la tradición bíblica, el protector. Invocarlo te da sensación de amparo.", c:"Al salir de casa, antes de un viaje o cuando sientas miedo."},
+ casa:{p:"Llenar tu casa de luz te deja dormir más tranquila.", c:"Cada noche, antes de dormir."},
+ ambiente:{p:"Hay lugares y personas que cargan. Este decreto te ayuda a no quedarte con lo que no es tuyo.", c:"Al salir de un ambiente pesado o después de una conversación negativa."},
+ violeta:{p:"La luz violeta se usa en la tradición espiritual para transformar lo negativo en positivo, sin lucha.", c:"A diario, y cuando quieras limpiar enfados, celos o miedos."},
+ violetarapido:{p:"Para cuando no tienes tiempo de nada más.", c:"En el momento en que notes algo negativo, en ti o a tu alrededor."},
+ violetamundo:{p:"Tu práctica también puede servir a otros.", c:"Cuando sepas de alguien que sufre o de un lugar en crisis."},
+ porotro:{p:"Enviar luz a alguien te saca de la impotencia y te pone a ayudar.", c:"Cuando alguien que quieres esté enfermo o pasando un mal momento."},
+ seresqueridos:{p:"El miedo por los tuyos se transforma en confianza.", c:"Cuando te asalte el miedo por alguien de tu familia."},
+ partida:{p:"Pide paz para quien se va y consuelo para los que se quedan.", c:"Cuando sepas de alguien que está muriendo."},
+ nacer:{p:"Una bendición para el comienzo de una vida.", c:"Por una embarazada o un bebé por nacer."},
+ difuntos:{p:"Recordar con amor sin quedarte atada al dolor.", c:"En aniversarios, o cuando les eches de menos."},
+ lodesiempre:{p:"Lo que tienes siempre es lo que más fácil se olvida agradecer.", c:"Cada día, sobre todo cuando no encuentres de qué dar las gracias."},
+ graciasantes:{p:"Dar las gracias por adelantado es la forma más clara de confiar.", c:"Después de pedir algo, y cada vez que te acuerdes de ello."},
+ gracias3:{p:"Cerrar el día con lo bueno entrena tu mente para verlo.", c:"Cada noche."},
+ soltar:{p:"Lo que no sueltas antes de dormir se queda dando vueltas en la cama.", c:"Como último pensamiento del día."},
+ sueno:{p:"Te duermes en calma y ofreces tu descanso para el bien.", c:"Al apoyar la cabeza en la almohada."},
+ yosoy:{p:"Te recuerda que “yo soy” es una frase con fuerza, y que conviene usarla solo para el bien.", c:"Cuando quieras afirmar algo con poder."},
+ antesorar:{p:"Para cuando sientes que no sabes rezar o que lo haces mal.", c:"Antes de cualquier decreto u oración."},
+ fe:{p:"La fe no se fabrica: se riega. Este decreto te quita la presión de “tener que creer”.", c:"Cuando dudes de que algo vaya a funcionar."},
+ padrenuestro:{p:"La oración que enseñó Jesús. Dicha despacio, es una meditación completa.", c:"Una vez al día, con atención a cada frase."},
+ salmo23:{p:"El salmo de la confianza: nada falta a quien se sabe cuidado.", c:"Cuando sientas que te falta algo o tengas miedo."},
+ salmo91:{p:"El salmo de la protección de quien vive cerca de Dios.", c:"Cuando tengas miedo o te sientas sin amparo."}
+};
+
+window.DIAS = [ // índice = día de la semana (0 domingo)
+ {dia:"Domingo", q:"Gratitud", hex:"#E07A3D", x:"Repasa la semana y da las gracias por todo lo bueno, incluso por lo pequeño.", d:"GRACIAS, PADRE, POR TODO LO QUE ME DISTE ESTA SEMANA Y POR LO QUE YA VIENE."},
+ {dia:"Lunes", q:"Claridad", hex:"#3D8FC9", x:"Empieza la semana con las ideas claras. Antes de actuar, pregunta y escucha.", d:"MI MENTE ESTÁ CLARA. SÉ QUÉ HACER Y CUÁNDO HACERLO."},
+ {dia:"Martes", q:"Amor", hex:"#D9709A", x:"Trata a cada persona con cariño, empezando por ti.", d:"DOY AMOR Y RECIBO AMOR. HOY TODO LO QUE TOCO SE SUAVIZA."},
+ {dia:"Miércoles", q:"Orden", hex:"#3D63C9", x:"Ordena algo concreto: un cajón, una cuenta, una conversación pendiente.", d:"TODO EN MI VIDA ENCUENTRA SU LUGAR. YO SOY ORDEN."},
+ {dia:"Jueves", q:"Salud", hex:"#3E9E6A", x:"Cuida tu cuerpo: agua, descanso, movimiento. Y bendícelo.", d:"MI CUERPO ES SABIO Y SE RENUEVA. YO SOY SALUD EN CADA CÉLULA."},
+ {dia:"Viernes", q:"Abundancia", hex:"#C98A2B", x:"Fíjate en todo lo que ya tienes. Bendice cada pago y cada ingreso.", d:"LA ABUNDANCIA CIRCULA HACIA MÍ Y A TRAVÉS DE MÍ. SIEMPRE HAY DE SOBRA."},
+ {dia:"Sábado", q:"Perdón", hex:"#7B4FC4", x:"Suelta lo que pesa: un rencor, una culpa, una preocupación.", d:"SUELTO EL PASADO CON AMOR. QUEDO EN PAZ Y SIN PESO."}
+];
+
+window.REVISION = [
+ "He cuidado mis palabras.",
+ "He buscado lo bueno en lo que me ha pasado.",
+ "He soltado al menos un rencor o una queja.",
+ "He dado las gracias cada día.",
+ "He hecho mi trabajo con cariño, me guste o no.",
+ "He cuidado mi cuerpo: descanso, agua, movimiento.",
+ "He ayudado a alguien sin esperar nada.",
+ "No he alimentado chismes ni críticas.",
+ "He dedicado un rato cada día a estar en silencio.",
+ "He leído o escuchado algo que me eleva."
+];
+
+window.PRINCIPIOS = [
+ {n:"Mentalismo", l:"Todo es mente.", x:"Lo que vives por fuera empieza por dentro, como una idea o una creencia. Si cambias la creencia, con el tiempo cambia lo que vives."},
+ {n:"Correspondencia", l:"Como es arriba, es abajo; como es dentro, es fuera.", x:"Tu casa, tu cuerpo y tus relaciones reflejan tu mundo interior. Son un espejo, no un castigo."},
+ {n:"Vibración", l:"Nada está quieto; todo vibra.", x:"Los pensamientos y las emociones también vibran. Lo que vibra alto, como la gratitud o la alegría, disuelve lo que vibra bajo."},
+ {n:"Polaridad", l:"Todo tiene dos polos.", x:"El miedo y la fe son la misma energía en extremos distintos. No hay que destruir lo negativo: basta con moverse hacia el otro polo."},
+ {n:"Ritmo", l:"Todo va y viene.", x:"Hay épocas de subida y de bajada, como las mareas. Saberlo te permite no hundirte en la bajada ni confiarte en la subida."},
+ {n:"Causa y efecto", l:"Toda causa tiene su efecto.", x:"Lo que siembras vuelve. Lo que llamamos suerte son causas que todavía no vemos."},
+ {n:"Género", l:"Todo tiene su parte masculina y su parte femenina.", x:"Para crear hacen falta dos cosas: una idea clara (lo que quieres) y un sentimiento (cómo te sentirías al tenerlo). Una sin la otra se queda a medias."}
+];
+
+window.PRACTICA = {
+ "Mentalismo":"Cuando algo te salga mal, pregúntate sin culparte: ¿qué esperaba yo que pasara?",
+ "Correspondencia":"Si tienes la mente revuelta, ordena un cajón o una mesa. Lo de fuera también ordena lo de dentro.",
+ "Vibración":"Si notas que entras en una conversación negativa, cambia de tema o sal un momento. Te estás cuidando.",
+ "Polaridad":"Cuando te pilles quejándote, busca la versión positiva de la misma frase y dila en voz alta.",
+ "Ritmo":"En un día malo, recuérdate: esto también pasa. Mantén tu práctica aunque no tengas ganas.",
+ "Causa y efecto":"Siembra hoy algo concreto: una palabra amable, una ayuda, un pago hecho con gratitud.",
+ "Género":"Cuando decretes, no te limites a decirlo: siente la alegría de tenerlo ya."
+};
+
+window.LECTURAS = [
+ "Lo que repites cada día termina pareciéndose a tu vida.",
+ "Cada palabra es una semilla. Fíjate en lo que siembras al hablar.",
+ "El miedo también es fe: fe en lo que no quieres. Cámbiala de dirección.",
+ "Tu mente no distingue entre una broma y una orden. Cuida hasta tus chistes sobre ti.",
+ "Cuando quitas un pensamiento viejo, pon uno nuevo en su sitio. El hueco no se queda vacío.",
+ "Perdonar no es olvidar. Es dejar de cargar.",
+ "Dar las gracias antes de ver es la forma más alta de creer.",
+ "Declara una vez, con todo tu corazón. Después, confía.",
+ "La preocupación espera lo peor. La fe espera lo mejor. Las dos esperan: elige qué.",
+ "Cinco minutos de silencio al día cambian más que una hora de preocupación.",
+ "Hoy es el único día en el que puedes hacer algo. Úsalo bien.",
+ "Lo que guardas en silencio crece con más fuerza.",
+ "Tus deseos más profundos no son caprichos: son pistas de tu camino.",
+ "Dios no quiere tu sufrimiento. Quiere tu bien, tu salud y tu alegría.",
+ "Donde pones la atención, pones tu vida.",
+ "La paz no es que no pase nada. Es que nada te saque de ti.",
+ "No discutas con la apariencia. Declara la verdad y sigue andando.",
+ "Bendecir es decir bien. Y lo que dices bien, mejora.",
+ "Una vela no pierde nada encendiendo otra.",
+ "No necesitas entenderlo todo para empezar. Necesitas practicar.",
+ "Leer abre la puerta. Practicar es entrar.",
+ "Tu cuerpo escucha todo lo que dices de él.",
+ "Agradecer lo poco abre la puerta a lo mucho.",
+ "La crítica pesa más a quien la lleva que a quien la recibe.",
+ "Cuando no sepas qué hacer, respira y bendice. Después lo sabrás.",
+ "Tu valor no depende de lo que tienes ni de lo que haces. Ya vales.",
+ "El bien que deseas a otros vuelve a ti por el mismo camino.",
+ "Empieza el día con un pensamiento bueno y el resto del día tendrá dónde apoyarse.",
+ "Cambiar de frase es el primer paso para cambiar de vida.",
+ "Lo que te asusta pierde fuerza en cuanto dejas de alimentarlo."
+];
+
+window.PORQUE = {
+ enfermedad:"Lo que piensas y sientes influye en tu cuerpo: el miedo tensa y la paz relaja. Al soltar la idea de enfermedad y afirmar la vida, cambias el clima interior en el que tu cuerpo trabaja para sanar. Esta práctica acompaña al tratamiento médico; nunca lo sustituye.",
+ temor:"El miedo es fe puesta en lo que no quieres: imaginas lo peor y te preparas para ello. No hace falta luchar contra él. Basta con mover esa misma fuerza hacia el otro lado: confiar en el bien.",
+ tristeza:"La tristeza encoge la mirada: solo ves lo que falta. Nombrar lo que tienes, aunque sea pequeño, la vuelve a abrir. La gratitud y la tristeza no caben a la vez en el mismo momento.",
+ escasez:"Cuando solo piensas en lo que no tienes, tu atención se queda en la carencia y actúas desde el miedo. Al declarar abundancia y bendecir lo que ya tienes, empiezas a ver oportunidades que antes pasabas por alto.",
+ inarmonia:"En un conflicto, cada uno defiende su parte. Al bendecir la solución en lugar de pelear por tener razón, bajas la tensión y dejas espacio para una salida buena para todos.",
+ falta:"La ansiedad bloquea. Cuando declaras que lo que necesitas ya viene y te calmas, tu mente funciona mejor y aparece la respuesta: una idea, un recuerdo, una persona.",
+ perdido:"Lo que de verdad te pertenece no depende de un objeto. Mantener la calma en lugar de lamentarte te permite pensar con claridad y te abre a que vuelva, o a que llegue algo igual o mejor.",
+ resentimiento:"El rencor te ata a quien te hirió y te hace revivir el daño una y otra vez. Recordar a propósito algo bueno de esa persona rompe ese círculo. No lo haces por ella: lo haces por tu paz.",
+ dano:"Responder al ataque con más ataque alimenta el conflicto. Rodearte de luz y hablarle a lo mejor del otro te protege por dentro y desarma la situación. A la vez, pon límites y protégete por fuera.",
+ preocupacion:"La preocupación es imaginar el peor resultado con todo detalle. Al poner el asunto en manos de Dios, dejas de alimentarlo y recuperas la calma para actuar con cabeza.",
+ recaida:"Cuando algo vuelve después de haberlo trabajado, lo fácil es pensar que no funcionó y volver a contar la historia. Pero contarla la refuerza. Mantenerte firme en tu palabra deja que lo nuevo termine de asentarse.",
+ negativo:"Cada frase que dices sobre ti o sobre tu vida es una instrucción para tu mente. Corregir en el momento borra la instrucción y pone otra en su lugar.",
+ muerte:"Hay pensamientos que llegan solos, sin que los busques. No son tuyos y no tienes que dialogar con ellos. Despedirlos con calma les quita fuerza; pelear con ellos con miedo se la da.",
+ catastrofe:"Lo que entra por tus ojos y tus oídos se te queda dentro. No se trata de ignorar el mundo, sino de no hacer tuyo el miedo de otros ni multiplicarlo reenviándolo.",
+ malhumor:"El mal humor se alimenta solo: el gesto tenso trae pensamientos tensos, y al revés. Sonreír y agradecer, aunque sea a la fuerza, corta el círculo desde el cuerpo.",
+ cola:"En un atasco, la impaciencia te hace sentir que todo está parado. Recordar que todo en la vida circula te devuelve la calma y, muchas veces, el camino se abre antes de lo que esperabas.",
+ duda:"Dudar y pedir lo mismo una y otra vez es como desenterrar una semilla para ver si ha brotado. Lo que declaraste ya está obrando. Tu parte ahora es confiar y dar las gracias.",
+ pazmundial:"Lo que llevas dentro se transmite. Cada persona que elige la paz en lugar del miedo o del odio suma paz al mundo. Tu oración cuenta."
+};
+
+window.GLOSARIO = [
+ {t:"Declarar una vez", s:"Por qué no repetirlo sin parar",
+  x:"Cuando haces un decreto para un problema concreto, lo haces una vez y con todo tu corazón. Repetirlo con angustia cada hora es como desenterrar una semilla para ver si ha germinado: la interrumpes.\n\nSi el asunto vuelve a tu mente, no lo declares de nuevo. Di: “Ya está en marcha, gracias”. Dar las gracias sí puedes hacerlo todas las veces que quieras.\n\nEsto no se aplica a los decretos diarios, que se repiten como rutina."},
+ {t:"Tu mente obedece", s:"Hasta las bromas cuentan",
+  x:"La parte de tu mente que guarda tus hábitos no razona ni distingue el tono. Recibe lo que dices de ti como instrucciones.\n\nSi te pasas la vida diciendo “qué torpe soy”, aunque sea en broma, tu mente lo toma en serio y te da más ocasiones de serlo. Habla de ti como hablarías de alguien a quien quieres."},
+ {t:"La apariencia", s:"Lo que ves no es lo definitivo",
+  x:"En esta práctica, “apariencia” es lo que estás viendo ahora: la deuda, el dolor, el conflicto. Es real como experiencia, pero no es la verdad última de tu vida.\n\nLa verdad última es el bien: salud, paz, abundancia, amor. La apariencia puede cambiar porque no tiene raíz propia; la verdad no cambia. Por eso no peleas con el problema: le quitas importancia y declaras lo que es verdad."},
+ {t:"Soltar y declarar", s:"Los dos movimientos",
+  x:"Toda la práctica tiene dos movimientos. Primero sueltas la idea vieja (“esto no es para mí”). Después llenas ese hueco con la idea nueva (“YO SOY salud”).\n\nSi solo sueltas, el hueco se vuelve a llenar con lo de siempre. Si solo declaras, lo nuevo choca con lo viejo. Juntos funcionan. Esta forma de orar, con negaciones y afirmaciones, la enseñaban ya los primeros maestros del Nuevo Pensamiento hace más de cien años."},
+ {t:"Dar las gracias antes", s:"La fe es alegría por adelantado",
+  x:"Jesús dio las gracias antes de ver el milagro: “Padre, gracias te doy que me has oído” (Juan 11:41).\n\nDar las gracias por adelantado no es fingir. Es confiar en que lo que pediste ya se está moviendo, aunque todavía no lo veas."},
+ {t:"Guardar silencio", s:"Por qué no contarlo",
+  x:"Lo que estás trabajando, no lo cuentes. Al hablarlo, sobre todo con quien duda, la fuerza se dispersa y llegan opiniones que siembran dudas en ti.\n\nLas fotos de antes se revelaban a oscuras. Deja que tu deseo se forme en silencio y cuéntalo cuando ya esté hecho, como agradecimiento."},
+ {t:"Pedir sin dañar", s:"Por qué añadir “en armonía con todos”",
+  x:"Cuando pides algo, añade que llegue en armonía con todos y sin daño para nadie. Así te aseguras de que tu bien no llegue a costa de otra persona.\n\nY si lo que pides no es lo mejor para ti, deja la puerta abierta a algo mejor. A veces lo que llega supera lo que pediste."},
+ {t:"El nombre YO SOY", s:"Por qué empezar así",
+  x:"En la Biblia, Dios se presenta a Moisés como “YO SOY EL QUE SOY” (Éxodo 3:14). En esta práctica, decir “yo soy” es usar ese nombre, así que lo que pongas detrás tiene fuerza.\n\nPor eso conviene no decir “yo soy un desastre” ni “estoy enferma de los nervios”. Reserva el “yo soy” para lo que quieres que crezca."}
+];
+
+window.CHECKIN = [
+ {k:"paz", t:"En paz", s:"Tranquila, agradecida", hint:"Quédate ahí. Da las gracias."},
+ {k:"prisa", t:"Con prisa", s:"Agitada, nerviosa", hint:"Para un momento: pausa del corazón."},
+ {k:"temor", t:"Con miedo", s:"Aprensión, inquietud", hint:"Vamos directo al miedo."},
+ {k:"bajo", t:"Baja", s:"Triste o sin dinero", hint:"Elige lo que está pasando."}
+];
+
+window.CTX_SECCION = {
+ hoy:{t:"Tu práctica de hoy",
+  x:"La práctica tiene tres momentos: al despertar, a mediodía y antes de dormir. Lo que haces al despertar marca el tono del día, la pausa de mediodía te devuelve a tu centro y lo que haces antes de dormir se queda trabajando mientras descansas.\n\nCada día de la semana tiene además una cualidad para cultivar. No hace falta hacerlo todo: marca lo que hagas y vuelve mañana."},
+ acepto:{t:"Soltar y declarar",
+  x:"Cuando pasa algo que no quieres, la reacción automática es darle vueltas, quejarse o contarlo. Esta herramienta te da otra salida en cuatro pasos: recordar quién eres, soltar la apariencia, declarar la verdad contraria y dar las gracias.\n\nÚsala en el momento. Hazlo una vez, con calma, y sigue con tu día."},
+ decretos:{t:"Qué es un decreto",
+  x:"Un decreto es una frase dicha con intención, en presente, que afirma el bien que quieres vivir. Todo lo que dices funciona como un decreto, lo quieras o no; aquí lo usas a propósito.\n\nAl abrir cada uno verás para qué sirve y cuándo usarlo. Puedes escucharlo, grabarlo con tu voz, guardarlo en favoritos o enviarlo por WhatsApp."},
+ herr:{t:"Herramientas",
+  x:"Leer ayuda, pero lo que cambia tu vida es practicar. Cada herramienta convierte una idea en algo que puedes hacer en uno o dos minutos."},
+ estudio:{t:"Para entender",
+  x:"Saber por qué funciona cada práctica te ayuda a hacerla con convicción y no de forma mecánica. Vuelve a esta sección de vez en cuando: cada lectura se entiende un poco mejor que la anterior."},
+ wishes:{t:"Mi lista de deseos",
+  x:"Escribir lo que deseas lo saca de la cabeza y lo vuelve concreto. Leerlo cada día mantiene tu atención en lo que quieres y no en lo que te falta.\n\nEmpieza con deseos sencillos. Cuando veas cumplirse los primeros, te costará menos creer en los grandes."},
+ medit:{t:"Un minuto de silencio",
+  x:"No hace falta sentarse una hora ni buscar un lugar especial. Un minuto de atención completa basta para volver a tu centro.\n\nSon tres fases de veinte segundos: aquietar el cuerpo, elegir una sola idea y sentirla. Una campana suave marca cada cambio."},
+ latido:{t:"Pausa del corazón",
+  x:"Tu corazón late sin que se lo pidas. Pararte a sentirlo te recuerda que hay una Vida más grande que te sostiene.\n\nEs la pausa ideal de mediodía, o de cualquier momento de prisa, nervios o malestar."},
+ perdon:{t:"Soltar un rencor",
+  x:"Guardar rencor es como cargar con una piedra que no te deja avanzar. Perdonar no significa dar la razón ni olvidar lo que pasó: significa dejar de cargar.\n\nNo hace falta sentir cariño por la persona. Basta con la decisión de soltar."},
+ diario:{t:"Lo que se cumplió",
+  x:"Apuntar lo que se cumple te da más fe que cualquier lectura: es tu propia prueba. Escribe sobre el resultado y da las gracias. No escribas sobre el problema, porque al describirlo lo vuelves a alimentar.\n\nTambién puedes anotar sueños claros al despertar."},
+ puntos:{t:"Revisión semanal",
+  x:"Una vez por semana, repasa estas diez preguntas. No es para castigarte: es para ver en qué vas bien y dónde poner la atención la semana que viene."},
+ palabra:{t:"Cuidar la palabra",
+  x:"Muchas frases que decimos por costumbre son decretos en contra de lo que deseamos. Esta lista te ayuda a reconocerlas.\n\nCada vez que te pilles diciendo una, corrígela con una frase positiva y márcalo en Hoy. Con el tiempo empezarás a corregirte antes de decirla."},
+ numero:{t:"Numerología",
+  x:"La numerología da un número a cada letra y a tu fecha de nacimiento. Cada número tiene una luz y una sombra: no te condena a nada, te muestra tendencias.\n\nÚsala como un espejo para conocerte, no como un destino escrito."},
+ mios:{t:"Escribe tus decretos",
+  x:"Los decretos más poderosos son los que salen de ti, con tus palabras y tu situación concreta. Aquí tienes una guía para escribirlos.\n\nPara transformar un problema: suelta la apariencia y declara la verdad contraria. Para pedir un deseo: dilo claro, pide que llegue en armonía con todos y da las gracias por adelantado."},
+ avisos:{t:"Avisos",
+  x:"La constancia es lo que da resultados. Tres avisos al día te recuerdan tu práctica aunque la app esté cerrada."},
+ voz:{t:"Voz y grabaciones",
+  x:"Puedes decir los decretos por dentro o en voz alta. Aquí el móvil te los lee, o los grabas con tu propia voz y los escuchas 1, 3 o 7 veces seguidas. Las grabaciones se quedan solo en este móvil."},
+ copia:{t:"Tus datos",
+  x:"Todo lo que escribes se guarda solo en este móvil. Haz una copia de vez en cuando."},
+ principios:{t:"Los 7 Principios",
+  x:"Son siete leyes de la tradición hermética, recogidas en El Kybalion (1908). Explican la relación entre lo que piensas y lo que vives. Actúan siempre y todas a la vez, lo sepas o no."},
+ dias:{t:"La semana",
+  x:"Cada día de la semana tiene una cualidad para cultivar. Es una forma sencilla de dar variedad a tu práctica. El decreto del día aparece en Hoy."}
+};
+
+window.NUMERO = {
+ intro:"Cada número tiene una luz y una sombra. El número no decide por ti: tú eliges cuál de las dos vives.",
+ maestros:"El 11 y el 22 son números maestros y no se reducen. Traen mucha fuerza y también más exigencia: piden poner los dones al servicio de los demás.",
+ n:{
+  1:{e:"Iniciativa", luz:"Valentía, independencia, liderazgo, ideas propias.", sombra:"Orgullo, impaciencia, querer tener siempre la razón.",
+     alma:"En el fondo deseas abrir camino, decidir por ti y crear algo que lleve tu sello.", pers:"En silencio te imaginas al frente de algo propio, sin depender de nadie.",
+     expr:"Te expresas mejor emprendiendo, dirigiendo o creando desde cero.", camino:"Vienes a aprender a confiar en ti y a dar el primer paso sin esperar permiso."},
+  2:{e:"Unión", luz:"Sensibilidad, diplomacia, paciencia, capacidad de cuidar.", sombra:"Timidez, dependencia, dejar de lado lo que tú quieres.",
+     alma:"Deseas paz, compañía y relaciones donde reine el cariño.", pers:"Te sueñas en un hogar tranquilo, cerca de los tuyos.",
+     expr:"Te expresas mejor colaborando, mediando y acompañando a otros.", camino:"Vienes a aprender a cooperar sin perderte y a valorar tu propia voz."},
+  3:{e:"Expresión", luz:"Alegría, creatividad, facilidad de palabra, simpatía.", sombra:"Dispersión, superficialidad, quejarse o criticar.",
+     alma:"Deseas expresarte, crear belleza y compartir alegría.", pers:"Te imaginas brillando, haciendo reír o emocionar a los demás.",
+     expr:"Te expresas mejor con la palabra, el arte, la comunicación y el trato con la gente.", camino:"Vienes a aprender a usar tu voz y tu creatividad con constancia."},
+  4:{e:"Construcción", luz:"Orden, trabajo, constancia, lealtad.", sombra:"Rigidez, terquedad, exceso de control.",
+     alma:"Deseas seguridad, estabilidad y construir algo sólido que dure.", pers:"Te ves como el pilar en quien todos confían.",
+     expr:"Te expresas mejor organizando, construyendo y cuidando los detalles.", camino:"Vienes a aprender a construir paso a paso y a disfrutar del proceso."},
+  5:{e:"Libertad", luz:"Curiosidad, adaptación, energía, ganas de vivir.", sombra:"Inquietud, inconstancia, huir del compromiso.",
+     alma:"Deseas libertad, cambio y experiencias nuevas.", pers:"Te sueñas viajando y conociendo gente y lugares sin ataduras.",
+     expr:"Te expresas mejor en lo que te pone en contacto con la gente: ventas, comunicación, viajes.", camino:"Vienes a aprender a usar bien tu libertad y a sacar una lección de cada cambio."},
+  6:{e:"Cuidado", luz:"Amor, responsabilidad, armonía, don para sanar.", sombra:"Preocupación excesiva, querer arreglar la vida de todos.",
+     alma:"Deseas un hogar lleno de amor y cuidar de los que quieres.", pers:"Te ves en el centro de una familia unida, en una casa bonita y acogedora.",
+     expr:"Te expresas mejor cuidando, enseñando, embelleciendo o sanando.", camino:"Vienes a aprender a dar amor sin cargar con lo que no te toca."},
+  7:{e:"Sabiduría", luz:"Intuición, profundidad, espiritualidad, capacidad de análisis.", sombra:"Aislamiento, desconfianza, melancolía.",
+     alma:"Deseas silencio, comprensión y respuestas a las grandes preguntas.", pers:"Te imaginas en calma, entre libros, aprendiendo lo que otros no ven.",
+     expr:"Te expresas mejor investigando, enseñando o aconsejando desde lo que sabes.", camino:"Vienes a aprender a confiar en tu intuición y a disfrutar de tu propia compañía."},
+  8:{e:"Logro", luz:"Capacidad de lograr, sentido práctico, buena gestión del dinero.", sombra:"Ambición sin medida, dureza, vivir para trabajar.",
+     alma:"Deseas éxito, reconocimiento y libertad material.", pers:"Te ves al frente de un proyecto grande que da fruto.",
+     expr:"Te expresas mejor dirigiendo, gestionando y haciendo crecer negocios.", camino:"Vienes a aprender a manejar el dinero y el poder, y a usarlos para el bien."},
+  9:{e:"Entrega", luz:"Compasión, generosidad, mirada amplia, sensibilidad artística.", sombra:"Dramatismo, sacrificio excesivo, no saber cerrar etapas.",
+     alma:"Deseas ayudar a muchos y dejar el mundo mejor de lo que lo encontraste.", pers:"Te sueñas haciendo algo que inspire o consuele a mucha gente.",
+     expr:"Te expresas mejor sirviendo, aconsejando y creando para los demás.", camino:"Vienes a aprender a dar sin apegarte y a cerrar ciclos con amor."},
+  11:{e:"Inspiración", luz:"Intuición fuerte, idealismo, capacidad de inspirar.", sombra:"Nervios, autoexigencia, sentirse incomprendido.",
+     alma:"Deseas transmitir lo que ves y elevar a otros.", pers:"Te imaginas trayendo luz a quien la busca.",
+     expr:"Te expresas mejor enseñando, guiando y comunicando ideas que elevan.", camino:"Vienes a aprender a fiarte de lo que sientes y a vivir lo que dices."},
+  22:{e:"Gran constructor", luz:"Visión grande con los pies en la tierra; capacidad de hacer realidad lo que otros solo sueñan.", sombra:"Presión, miedo a no estar a la altura.",
+     alma:"Deseas construir algo grande que sirva a muchos.", pers:"Te ves levantando un proyecto que cambia la vida de otros.",
+     expr:"Te expresas mejor organizando obras o proyectos de gran alcance.", camino:"Vienes a aprender a convertir tus ideales en algo concreto y útil."}
+ }
+};
+
+</script>
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const paras=s=>esc(s).split(/\n\n+/).map(p=>"<p>"+p.replace(/\n/g,"<br>")+"</p>").join("");
+const KEY="decreta.v1";
+const defaults=()=>({days:{},fav:[],wishes:[],diary:[],puntos:{},neg:{},theme:"",mood:{},dismiss:{},mine:[],curso:[],recs:[],voz:{rate:0.9,rep:1,voice:""},name:"",nameAsked:false});
+let S=defaults();
+try{const raw=localStorage.getItem(KEY); if(raw) S=Object.assign(S,JSON.parse(raw));}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+if(S.theme) document.documentElement.setAttribute("data-theme",S.theme);
+
+const now=new Date();
+const ymd=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const TODAY=ymd(now);
+const doy=Math.floor((now-new Date(now.getFullYear(),0,0))/864e5);
+function weekKey(d){const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const day=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-day);const y=new Date(Date.UTC(t.getUTCFullYear(),0,1));return t.getUTCFullYear()+"-S"+Math.ceil(((t-y)/864e5+1)/7);}
+const WEEK=weekKey(now);
+const day=()=>S.days[TODAY]||(S.days[TODAY]={done:[],trat:0});
+const D=id=>DECRETOS.find(d=>d.id===id)||(S.mine.map(m=>({id:"m"+m.id,cat:"Míos",t:m.t,f:"Escrito el "+m.date,x:m.x})).find(d=>d.id===id));
+
+function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2200);}
+
+const FLAME='<svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 4c3 8 12 12 12 24a12 12 0 0 1-24 0c0-6 3-9 5-12 1 4 3 6 5 6-1-7 0-13 2-18z" fill="currentColor" opacity=".9"/><path d="M24 26c2 3 5 5 5 9a5 5 0 0 1-10 0c0-3 2-5 5-9z" fill="currentColor" opacity=".45"/></svg>';
+const ICONS={
+ hoy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3l1.7 1.7M17 17l1.7 1.7M5.3 18.7 7 17M17 7l1.7-1.7"/></svg>',
+ acepto:'<svg viewBox="0 0 48 48" fill="none"><path d="M24 4c3 8 12 12 12 24a12 12 0 0 1-24 0c0-6 3-9 5-12 1 4 3 6 5 6-1-7 0-13 2-18z" fill="currentColor"/></svg>',
+ decretos:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4h10l4 4v12H5z"/><path d="M8 11h8M8 14.5h8M8 18h5"/></svg>',
+ herr:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.4-7-10.2A4.3 4.3 0 0 1 12 8a4.3 4.3 0 0 1 7 2.8C19 16.6 12 21 12 21z"/></svg>',
+ estudio:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 5.5c3-1 6-1 9 1 3-2 6-2 9-1V19c-3-1-6-1-9 1-3-2-6-2-9-1z"/><path d="M12 6.5V20"/></svg>'
+};
+const TABS=[["hoy","Hoy"],["decretos","Decretos"],["acepto","Transformar"],["herr","Práctica"],["estudio","Estudio"]];
+let tab="hoy";
+function renderTabs(){
+  $("#tabs").innerHTML=TABS.map(([k,l])=>`<button class="${k===tab?"on":""} ${k==="acepto"?"center":""}" data-tab="${k}" aria-current="${k===tab?"page":"false"}">${ICONS[k]}<span>${l}</span></button>`).join("");
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-tab]"); if(b){tab=b.dataset.tab; render(); window.scrollTo(0,0);}
+});
+
+/* ---------- HOY ---------- */
+const ROUTINE={
+  "Mañana":[
+    {k:"despertar",d:"despertar",s:"Al abrir los ojos"},{k:"luz",d:"luz"},{k:"escudo",d:"escudo"},{k:"cubierto",d:"cubierto"},{k:"compromisos",d:"compromisos"},
+    {k:"lista-m",t:"Leer mi lista de deseos",s:"Al despertar",go:"wishes"}],
+  "Mediodía":[
+    {k:"corazon",t:"Pausa del corazón",s:"Mano en el pecho, un minuto",go:"latido"},{k:"pausa",d:"pausa"},{k:"bendecir",d:"bendecir"},{k:"violetarapido",d:"violetarapido"}],
+  "Noche":[
+    {k:"lista-n",t:"Leer mi lista de deseos",s:"Antes de dormir",go:"wishes"},{k:"soltar",d:"soltar"},
+    {k:"perdonar",d:"perdonar"},{k:"casa",d:"casa"},{k:"sueno",d:"sueno"}]
+};
+function checkin(){
+  const today=(S.mood[TODAY]||[]); const last=today[today.length-1];
+  const days=[];for(let i=6;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-i);const k=ymd(d);const m=S.mood[k]||[];days.push({l:d.toLocaleDateString("es-ES",{weekday:"narrow"}),m:m[m.length-1]});}
+  return `<section class="stack" style="gap:10px"><span class="eyebrow">¿Cómo estás ahora?</span>
+   <div class="mood">${CHECKIN.map(c=>`<button data-mood="${c.k}" class="${last===c.k?"on":""}"><i class="m-${c.k}"></i><b>${c.t}</b><small>${c.s}</small></button>`).join("")}</div>
+   <div class="week" aria-label="Tu semana">${days.map(d=>`<span>${d.l}<i class="${d.m?"m-"+d.m:""}"></i></span>`).join("")}</div></section>`;
+}
+function banner(){
+  const h=now.getHours(); const dis=S.dismiss[TODAY]||[];
+  let b=null;
+  if(h>=12&&h<16&&!dis.includes("med")&&!day().done.includes("corazon")) b={k:"med",t:"Es mediodía. ¿Te regalas un minuto de pausa del corazón?",go:"latido",l:"Ir"};
+  else if(h>=17&&h<22&&!dis.includes("pal")) b={k:"pal",t:"¿Has cuidado tus palabras hoy? Mira si se te ha escapado alguna frase negativa.",go:"palabra",l:"Ver"};
+  if(!b) return "";
+  return `<div class="banner"><p>${esc(b.t)}</p><button class="btn primary" data-tool="${b.go}">${b.l}</button><button class="del" data-dismiss="${b.k}" aria-label="Ocultar aviso">×</button></div>`;
+}
+function greeting(){const h=now.getHours();return h<13?"Buenos días":h<20?"Buenas tardes":"Buenas noches";}
+function viewHoy(){
+  const r=DIAS[now.getDay()], dd=day();
+  const fecha=now.toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"});
+  const lect=LECTURAS[doy%LECTURAS.length];
+  let rout="";
+  for(const [sec,items] of Object.entries(ROUTINE)){
+    const done=items.filter(i=>dd.done.includes(i.k)).length;
+    rout+=`<section class="card"><div class="routine-head"><h2>${sec}</h2><span class="prog">${done} de ${items.length}</span></div><div class="vrow" style="margin:6px 0 4px">${sayBtn("rut:"+sec,"Escuchar todo")}</div>`+
+      items.map(i=>{const dec=i.d?D(i.d):null;const t=i.t||dec.t;const on=dd.done.includes(i.k);
+        return `<div class="item ${on?"done":""}"><button class="check ${on?"on":""}" data-chk="${i.k}" aria-label="Marcar ${esc(t)}"></button>
+        <button class="lbl" data-open-r="${i.k}">${esc(t)}${i.s?`<small>${esc(i.s)}</small>`:""}</button></div>`}).join("")+`</section>`;
+  }
+  const negs=(S.neg[TODAY]||0);
+  return `<div class="stack-lg">
+   <header class="stack" style="gap:6px"><div class="row" style="justify-content:space-between"><span class="eyebrow">${esc(fecha)}</span>
+     <button class="theme-t" id="theme">${S.theme==="dark"?"Modo claro":S.theme==="light"?"Modo del sistema":"Modo oscuro"}</button></div>
+     <h1>${greeting()}${S.name?", "+esc(S.name):""}</h1></header>
+   ${ctxBox("hoy")}
+   ${checkin()}
+   ${banner()}
+   <button class="big-no" data-tab="acepto"><span class="flame">${FLAME}</span><span><b>Esto no es para mí</b><span>Algo negativo ahora mismo. Transfórmalo en 4 pasos.</span></span></button>
+   <section class="card ray" style="--ray:${r.hex}">
+     <span class="eyebrow">Cualidad del ${r.dia.toLowerCase()}</span>
+     <h2 style="margin-top:4px">${esc(r.q)}</h2>
+     <p class="small" style="margin-top:6px">${esc(r.x)}</p>
+     <p class="decree" style="margin-top:10px;font-size:1.05rem">${esc(r.d)}</p>
+     <div class="vrow">${sayBtn("dia:"+now.getDay())}</div>
+   </section>
+   <section class="stack" style="gap:8px"><span class="eyebrow">Para hoy</span><p class="quote">${esc(lect)}</p></section>
+   ${cursoCard()}
+   ${rout}
+   <section class="card row" style="justify-content:space-between">
+     <div><span class="eyebrow">Cuidar la palabra</span><p class="small muted" style="margin-top:4px">Frases que hoy corregiste a tiempo</p></div>
+     <div class="row"><span class="counter" style="color:var(--ok)">${negs}</span><button class="btn" data-sit="negativo">Corregí una</button></div>
+   </section>
+  </div>`;
+}
+
+/* ---------- TRANSFORMAR ---------- */
+function viewAcepto(){
+  return `<div class="stack-lg">
+   <header class="stack" style="gap:8px"><span class="eyebrow">Soltar y declarar</span><h1>Transformar</h1>
+   <p class="muted">Cuando pase algo que no quieres, elige qué está pasando. Te llevo paso a paso.</p></header>
+   ${ctxBox("acepto")}
+   <div class="grid2">${SITUACIONES.map(s=>`<button class="sit" data-sit="${s.id}"><b>${esc(s.titulo)}</b><small>${esc(s.sub)}</small></button>`).join("")}</div>
+   <p class="note">Hazlo una vez, con calma. Después, sigue con tu día y deja que obre.</p>
+  </div>`;
+}
+const THANKS="Gracias, Padre, porque ya está hecho.";
+function openSit(id,forceNew){
+  sheetKey=null;
+  const s=SITUACIONES.find(x=>x.id===id); let step=1;
+  const enCurso=!s.registra&&id!=="recaida"&&S.curso.find(x=>x.sit===id);
+  if(enCurso&&!forceNew){showCurso(enCurso);return;}
+  const draw=()=>{
+    const steps=[
+     `<div class="step" data-n="1"><span class="eyebrow">Recuerda</span><p style="margin-top:6px">${esc(FORMULA.recordar)}</p></div>`,
+     `<div class="step" data-n="2"><span class="eyebrow">Di, por dentro o en voz alta</span><p class="say" style="margin:8px 0">ESTO NO ES PARA MÍ</p><p class="small muted">${esc(FORMULA.noacepto)}</p></div>`,
+     `<div class="step" data-n="3"><span class="eyebrow">Declara la verdad: ${esc(s.verdad)}</span>
+        <div class="card" style="margin-top:8px"><p class="decree">${esc(s.decreto)}</p><div class="vrow">${sayBtn("sit:"+s.id)}</div></div>
+        ${s.aviso?`<p class="note" style="margin-top:10px">${esc(s.aviso)}</p>`:""}
+        ${s.enumerar?`<label class="f" style="margin-top:12px">Doy gracias por... (escríbelo todo, hasta lo más pequeño)<textarea id="enum" placeholder="El sol de esta mañana, mi familia, mi café, mis manos..."></textarea></label>`:""}
+        ${s.recordar?`<label class="f" style="margin-top:12px">Algo bueno de esa persona (no se guarda)<textarea id="enum" placeholder="Un rato agradable, algo que te hizo reír, una cualidad..."></textarea></label>`:""}
+        ${s.registra?`<div style="margin-top:12px"><span class="eyebrow">¿Cuál se te escapó?</span><div class="chips" style="flex-wrap:wrap;margin-top:8px">${FRASES_NEGATIVAS.map(f=>`<span class="chip small">${esc(f)}</span>`).join("")}</div></div>`:""}
+        ${s.extra.length?`<div class="stack" style="margin-top:14px;gap:10px"><span class="eyebrow">También te ayuda</span>${s.extra.map(e=>`<p class="small" style="padding-left:12px;border-left:3px solid var(--gold)">${esc(e)}</p>`).join("")}</div>`:""}
+      </div>`,
+     `<div class="step last" data-n="4"><span class="eyebrow">Da las gracias</span><p class="say" style="margin:8px 0;font-size:1.6rem">${THANKS}</p><p class="small muted">${esc(FORMULA.despues)}</p>
+       ${!s.registra&&s.id!=="recaida"?`<label class="f" style="margin-top:12px">¿Sobre qué asunto? (opcional, para verlo en “En marcha”)<input type="text" id="asunto" placeholder="la deuda del coche, la espalda..."></label>`:""}</div>`
+    ];
+    sheet(`<span class="eyebrow">Transformar</span>`,`<div class="stack" style="gap:6px"><h2>${esc(s.titulo)}</h2>
+      ${PORQUE[s.id]?`<details class="why" style="margin:6px 0 16px"><summary>¿Por qué funciona?</summary><p>${esc(PORQUE[s.id])}</p></details>`:""}${steps.slice(0,step).join("")}
+      ${step<4?`<button class="btn primary full" id="next">Siguiente paso</button>`:`<button class="btn gold full" id="fin">Hecho. Lo dejo obrar.</button>`}</div>`);
+    const n=$("#next"); if(n) n.onclick=()=>{step++;draw();setTimeout(()=>{const st=document.querySelectorAll(".step");if(st.length)st[st.length-1].scrollIntoView({behavior:"smooth",block:"start"})},40)};
+    const f=$("#fin"); if(f) f.onclick=()=>{const dd=day();dd.trat=(dd.trat||0)+1; if(s.registra){S.neg[TODAY]=(S.neg[TODAY]||0)+1;}
+      else if(s.id!=="recaida"){const a=($("#asunto")||{}).value||"";S.curso=S.curso.filter(x=>x.sit!==s.id);S.curso.push({id:Date.now()+"",sit:s.id,t:s.titulo,a:a.trim(),date:TODAY});} save(); closeSheet(); toast(s.registra?"Corregida. Sigue adelante.":"Hecho. No lo comentes; déjalo obrar."); render();};
+  };
+  draw();
+}
+
+/* ---------- DECRETOS ---------- */
+let decCat="Todos", decQ="", openDec=null;
+function viewDecretos(){
+  const cats=["Todos","Favoritos","Míos",...new Set(DECRETOS.map(d=>d.cat))];
+  const q=decQ.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const norm=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const ALL=DECRETOS.concat(S.mine.map(m=>({id:"m"+m.id,cat:"Míos",t:m.t,f:"Escrito el "+m.date,x:m.x})));
+  const list=ALL.filter(d=>(decCat==="Todos"||(decCat==="Favoritos"?S.fav.includes(d.id):d.cat===decCat))&&(!q||norm(d.t+" "+d.x).includes(q)));
+  return `<div class="stack-lg">
+   <header class="stack" style="gap:8px"><span class="eyebrow">${DECRETOS.length} decretos y oraciones${S.mine.length?" · "+S.mine.length+" tuyos":""}</span><h1>Decretos</h1></header>
+   ${ctxBox("decretos")}
+   <input type="text" id="q" placeholder="Buscar: dinero, miedo, perdón, luz violeta..." value="${esc(decQ)}" aria-label="Buscar decretos">
+   <div class="chips">${cats.map(c=>`<button class="chip ${c===decCat?"on":""}" data-cat="${esc(c)}">${esc(c)}</button>`).join("")}</div>
+   <div>${list.map(d=>`<article class="dec"><div class="dec-h"><button class="t" data-dec="${d.id}" aria-expanded="${openDec===d.id}"><b>${esc(d.t)}</b><small>${esc(d.cat)} · ${esc(d.f)}</small></button>
+     <button class="star ${S.fav.includes(d.id)?"on":""}" data-fav="${d.id}" aria-label="Favorito">${S.fav.includes(d.id)?"★":"☆"}</button></div>
+     ${openDec===d.id?`<div class="body">${decCtx(d.id)}<div class="texto decree" style="font-size:1.1rem">${paras(d.x)}</div>
+       <div class="vrow">${sayBtn("dec:"+d.id)}${recBtns(d.id)}</div>
+       <div class="share"><button data-copy="${d.id}">Copiar texto</button><a href="https://wa.me/?text=${encodeURIComponent(shareText(d))}" target="_blank" rel="noopener">Enviar por WhatsApp</a></div></div>`:""}</article>`).join("")||`<p class="muted">${decCat==="Favoritos"?"Marca con ☆ los decretos que más uses y aparecerán aquí.":decCat==="Míos"?"Aún no has escrito ninguno. Hazlo en Práctica › Mis decretos.":"No hay textos con esa búsqueda."}</p>`}</div>
+  </div>`;
+}
+
+const shareText=d=>`${d.t}\n\n${d.x}\n\n— Decreta`;
+/* ---------- PRÁCTICA ---------- */
+const TOOLS=[
+ ["wishes","Mi lista de deseos","Para leer al despertar y antes de dormir"],
+ ["mios","Mis decretos","Escribe tus propios decretos paso a paso"],
+ ["medit","Un minuto de silencio","Aquietar, elegir, sentir"],
+ ["latido","Pausa del corazón","Siente tu latido y vuelve a la calma"],
+ ["perdon","Soltar un rencor","Cuatro pasos para quedar libre"],
+ ["diario","Lo que se cumplió","Logros, gratitud y sueños"],
+ ["puntos","Revisión semanal","Diez preguntas para ver cómo vas"],
+ ["palabra","Cuidar la palabra","Frases que conviene cambiar"],
+ ["numero","Numerología","Alma, personalidad, expresión y camino de vida"],
+ ["voz","Voz y grabaciones","Velocidad, repeticiones y tu propia voz"],
+ ["avisos","Avisos en el calendario","Mañana, mediodía y noche en tu móvil"],
+ ["nombre","Tu nombre","Cómo quieres que te salude la app"],
+ ["copia","Copia de seguridad","Guardar o recuperar tus datos"]
+];
+function viewHerr(){
+  return `<div class="stack-lg"><header class="stack" style="gap:8px"><span class="eyebrow">Para practicar todo el día</span><h1>Práctica</h1></header>
+   ${ctxBox("herr")}
+   <div class="stack" style="gap:10px">${TOOLS.map(([k,t,s])=>`<button class="tile" data-tool="${k}"><span><b>${esc(t)}</b><small>${esc(s)}</small></span><span class="arr">›</span></button>`).join("")}</div></div>`;
+}
+const TOOLFN={};
+TOOLFN.wishes=function(){
+  const draw=()=>{
+    const act=S.wishes.filter(w=>!w.done), got=S.wishes.filter(w=>w.done);
+    sheet(`<span class="eyebrow">Mis deseos</span>`,`<div class="stack-lg">
+     <h2>Mi lista de deseos</h2>
+     <ol class="small muted" style="margin:0;padding-left:20px;display:grid;gap:6px">
+      <li>Escribe cada deseo con detalle, como si ya fuera tuyo.</li>
+      <li>Léela por la mañana y por la noche.</li>
+      <li>Al leer cada deseo, siente un momento la alegría de tenerlo.</li>
+      <li>Guárdala para ti.</li></ol>
+     <div class="row" style="flex-wrap:nowrap"><input type="text" id="wnew" placeholder="Deseo..." aria-label="Nuevo deseo"><button class="btn primary" id="wadd">Añadir</button></div>
+     <div class="card">${act.length?act.map(w=>`<div class="wish"><button class="check" data-wdone="${w.id}" aria-label="Se cumplió"></button><p>${esc(w.t)}</p><button class="del" data-wdel="${w.id}">Quitar</button></div>`).join(""):`<p class="muted">Aún no hay deseos. Empieza por algo sencillo: ver cumplirse lo pequeño te dará confianza para lo grande.</p>`}</div>
+     <div class="card" style="background:var(--violet-soft)"><p class="decree">Gracias, Padre, porque cada uno de estos deseos ya está en camino.</p>
+      <p class="small muted" style="margin-top:8px">${esc(D("pedir").x.split("\n\n")[0])}</p></div>
+     ${got.length?`<section class="stack" style="gap:6px"><span class="eyebrow">Ya se cumplió · ${got.length}</span><div class="card">${got.map(w=>`<div class="wish done"><span class="check on"></span><p>${esc(w.t)}<br><small class="muted">${esc(w.d||"")}</small></p><button class="del" data-wdel="${w.id}">Quitar</button></div>`).join("")}</div>
+      <p class="small muted">Cuando algo se cumpla, no pienses “habría pasado igual”. Da las gracias: es tu práctica dando fruto.</p></section>`:""}
+    </div>`);
+    const add=()=>{const v=$("#wnew").value.trim(); if(!v) return; S.wishes.push({id:Date.now()+"",t:v,done:false}); save(); draw();};
+    $("#wadd").onclick=add; $("#wnew").onkeydown=e=>{if(e.key==="Enter")add();};
+    document.querySelectorAll("[data-wdone]").forEach(b=>b.onclick=()=>{const w=S.wishes.find(x=>x.id===b.dataset.wdone);w.done=true;w.d="Cumplido el "+new Date().toLocaleDateString("es-ES");save();toast("¡Gracias!");draw();});
+    document.querySelectorAll("[data-wdel]").forEach(b=>b.onclick=()=>{S.wishes=S.wishes.filter(x=>x.id!==b.dataset.wdel);save();draw();});
+  };
+  draw();
+};
+const VERDADES=["armonía","amor","salud","abundancia","paz","vida","orden","claridad","libertad","justicia","sabiduría","alegría"];
+TOOLFN.mios=function(){
+  let mode="tratar", ver="armonía";
+  const draw=()=>{
+    sheet(`<span class="eyebrow">Mis decretos</span>`,`<div class="stack-lg"><h2>Escribe tu propio decreto</h2>
+     <p class="small muted">Los decretos que más funcionan son los que salen de ti.</p>
+     <div class="chips"><button class="chip ${mode==="tratar"?"on":""}" data-mode="tratar">Transformar un problema</button><button class="chip ${mode==="pedir"?"on":""}" data-mode="pedir">Pedir un deseo</button></div>
+     ${mode==="tratar"?`
+      <label class="f">Lo que está pasando<input type="text" id="ap" placeholder="esta deuda, este dolor de espalda, este conflicto..."></label>
+      <div><span class="eyebrow">La verdad que declaras</span><div class="chips" style="flex-wrap:wrap;margin-top:8px">${VERDADES.map(v=>`<button class="chip ${v===ver?"on":""}" data-ver="${v}">${v}</button>`).join("")}</div></div>`:`
+      <label class="f">Deseo...<input type="text" id="ap" placeholder="un trabajo que me guste, una casa luminosa..."></label>
+      <p class="small muted">Pide claro y sin miedo. Si es dinero, di la cantidad; si es trabajo, de qué, con qué sueldo y en qué condiciones.</p>`}
+     <button class="btn primary" id="gen">Escribir el decreto</button>
+     <div id="out"></div>
+     <section class="stack" style="gap:10px"><span class="eyebrow">Guardados · ${S.mine.length}</span>${S.mine.slice().reverse().map(m=>`<div class="card"><p class="decree" style="font-size:1.05rem">${esc(m.x)}</p><div class="vrow">${sayBtn("dec:m"+m.id)}${recBtns("m"+m.id)}</div><div class="row" style="justify-content:space-between;margin-top:8px"><small class="muted">${esc(m.date)}</small><button class="del" data-mdel="${m.id}">Quitar</button></div></div>`).join("")||`<p class="small muted">Aquí quedarán tus decretos. También aparecen en Decretos, en la categoría “Míos”.</p>`}</section>
+    </div>`);
+    document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{mode=b.dataset.mode;draw();});
+    document.querySelectorAll("[data-ver]").forEach(b=>b.onclick=()=>{ver=b.dataset.ver;const v=$("#ap").value;draw();$("#ap").value=v;});
+    document.querySelectorAll("[data-mdel]").forEach(b=>b.onclick=()=>{S.mine=S.mine.filter(x=>x.id!==b.dataset.mdel);save();draw();});
+    $("#gen").onclick=()=>{
+      const a=$("#ap").value.trim(); if(!a){toast("Escribe primero lo que está pasando o lo que deseas");return;}
+      const x=mode==="tratar"
+        ?`ESTO NO ES PARA MÍ. ${a.toUpperCase()} NO ES LA VERDAD DE MI VIDA, Y LO SUELTO AHORA. LA VERDAD ES ${ver.toUpperCase()}: ESO ES LO QUE YO SOY Y LO QUE VIVO. GRACIAS, PADRE, PORQUE YA ESTÁ HECHO.`
+        :`DESEO ${a.toUpperCase()}. QUE LLEGUE EN ARMONÍA CON TODOS, SIN DAÑO PARA NADIE, POR EL CAMINO MÁS PERFECTO. GRACIAS, PADRE, PORQUE YA ESTÁ EN CAMINO.`;
+      $("#out").innerHTML=`<div class="card" style="background:var(--violet-soft)"><p class="decree">${esc(x)}</p>
+        <p class="small muted" style="margin-top:8px">${mode==="tratar"?"Dilo una vez, con calma y seguridad. Después, sigue con tu día.":"Ahora suéltalo y confía. No vigiles por dónde va a llegar."}</p>
+        <button class="btn gold" id="msave" style="margin-top:10px">Guardar en Mis decretos</button></div>`;
+      $("#msave").onclick=()=>{const mid=Date.now()+"";S.mine.push({id:mid,x,t:(mode==="tratar"?"Transformar: ":"Deseo: ")+a,date:new Date().toLocaleDateString("es-ES")});
+        if(mode==="tratar") S.curso.push({id:mid+"c",sit:"mine",t:"Mi decreto",a,date:TODAY});
+        save();toast(mode==="tratar"?"Guardado y añadido a “En marcha”":"Guardado");draw();};
+    };
+  };
+  draw();
+};
+TOOLFN.avisos=function(){
+  const url=location.href.split("#")[0];
+  const ev=(uid,h,m,title,desc)=>["BEGIN:VEVENT","UID:"+uid+"@decreta","DTSTAMP:20261008T000000Z",`DTSTART:20261009T${h}${m}00`,"DURATION:PT10M","RRULE:FREQ=DAILY","SUMMARY:"+title,"DESCRIPTION:"+desc+"\\n"+url,"URL:"+url,"BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+title,"TRIGGER:PT0M","END:VALARM","END:VEVENT"].join("\r\n");
+  sheet(`<span class="eyebrow">Avisos</span>`,`<div class="stack-lg"><h2>Avisos en el calendario</h2>
+   <p class="small">Tres avisos diarios que suenan en tu móvil aunque la app esté cerrada. Elige la hora de cada uno y pulsa el botón: el móvil te ofrecerá añadirlos al calendario.</p>
+   <label class="f">Mañana (primer pensamiento y luz interior)<input type="time" id="h1" value="${S.av1||"07:30"}"></label>
+   <label class="f">Mediodía (pausa del corazón)<input type="time" id="h2" value="${S.av2||"13:30"}"></label>
+   <label class="f">Noche (lista de deseos y soltar el día)<input type="time" id="h3" value="${S.av3||"22:00"}"></label>
+   <button class="btn primary full" id="ics">Añadir los 3 avisos al calendario</button>
+   <p class="small muted">Si un día quieres quitarlos, se borran desde la app Calendario.</p></div>`);
+  $("#ics").onclick=()=>{
+    const v=[1,2,3].map(i=>$("#h"+i).value||"08:00"); S.av1=v[0];S.av2=v[1];S.av3=v[2]; save();
+    const [a,b,c]=v.map(x=>x.split(":"));
+    const ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Decreta//ES","CALSCALE:GREGORIAN",
+      ev("manana",a[0],a[1],"Decreta · Mañana","Primer pensamiento del día. Luz interior. Leer mi lista."),
+      ev("mediodia",b[0],b[1],"Decreta · Pausa del corazón","Mano en el pecho. Siente tu latido."),
+      ev("noche",c[0],c[1],"Decreta · Noche","Leer mi lista. Suelto el día y descanso."),"END:VCALENDAR"].join("\r\n");
+    try{const blob=new Blob([ics],{type:"text/calendar"});const l=document.createElement("a");l.href=URL.createObjectURL(blob);l.download="avisos-decreta.ics";document.body.appendChild(l);l.click();l.remove();toast("Abre el archivo para añadirlo al calendario");}catch(e){toast("No se pudo crear el archivo");}
+  };
+};
+TOOLFN.medit=function(){
+  let timer=null, t=0, subj="la paz", lock=null, ctx=null;
+  const PH=["Aquietar","Elegir","Sentir"];
+  const tone=()=>{try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=528;g.gain.setValueAtTime(.0001,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.15,ctx.currentTime+.05);g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+1.6);o.connect(g).connect(ctx.destination);o.start();o.stop(ctx.currentTime+1.7);}catch(e){}};
+  const draw=()=>{
+    const ph=Math.min(2,Math.floor(t/20)); const left=60-t;
+    sheet(`<span class="eyebrow">Silencio</span>`,`<div class="stack-lg" style="text-align:center">
+     <h2>Un minuto de silencio</h2>
+     <label class="f" style="text-align:left">En qué me centro<select id="subj">${["la paz","el amor","la Presencia de Dios en mí","la salud","la abundancia","la gratitud"].map(o=>`<option ${o===subj?"selected":""}>${o}</option>`).join("")}</select></label>
+     <div class="orb ${timer?"breath":""}"><div><div class="n">${timer||t?left:60}</div><div class="small muted">${timer||t?PH[t>=60?2:ph]:"segundos"}</div></div></div>
+     <div class="phase">${PH.map((p,i)=>`<i class="${(timer||t)&&i<=(t>=60?2:ph)?"on":""}"></i>`).join("")}</div>
+     <p class="small muted" style="text-align:left">${t>=60?"Quédate en esa sensación todo el tiempo que quieras. Cuando vuelvas a tus cosas, llévatela contigo.":
+      `Primeros veinte segundos: respira y deja que el cuerpo se afloje. Siguientes veinte: piensa en ${esc(subj)}, solo en eso. Últimos veinte: siéntelo en el pecho, como si ya lo estuvieras viviendo.`}</p>
+     ${timer?`<button class="btn full" id="stop">Detener</button>`:`<button class="btn primary full" id="go">${t>=60?"Otra vez":"Empezar"}</button>`}
+     <p class="small muted" style="text-align:left">No hace falta un lugar especial ni mucho tiempo. Un minuto de atención completa vale más que una hora distraída.</p></div>`, ()=>{clearInterval(timer);timer=null;try{lock&&lock.release()}catch(e){}});
+    $("#subj").onchange=e=>{subj=e.target.value;};
+    const go=$("#go"); if(go) go.onclick=async()=>{t=0;tone();try{lock=await navigator.wakeLock.request("screen")}catch(e){}
+      timer=setInterval(()=>{t++; if(t%20===0) tone(); if(t>=60){clearInterval(timer);timer=null;const dd=day();if(!dd.done.includes("medit"))dd.done.push("medit");save();} draw();},1000); draw();};
+    const st=$("#stop"); if(st) st.onclick=()=>{clearInterval(timer);timer=null;draw();};
+  };
+  draw();
+};
+TOOLFN.latido=function(){
+  let n=0;
+  const draw=()=>{
+    sheet(`<span class="eyebrow">Pausa del corazón</span>`,`<div class="stack-lg">
+     <div class="step" data-n="1"><b>Pon la mano en el pecho.</b><p class="small muted" style="margin-top:4px">Apoya la palma sobre el corazón y respira despacio. Nota el latido, o el calor de tu mano.</p></div>
+     <div class="step" data-n="2"><b>Date cuenta.</b><p class="small muted" style="margin-top:4px">Ese latido no lo haces tú: la Vida lo hace por ti, sin descanso, desde antes de que nacieras. Esa misma Vida sostiene a todas las personas que quieres.</p></div>
+     <div class="step last" data-n="3"><b>Di en voz alta, tres veces:</b>
+      <p class="decree" style="margin:10px 0">LA VIDA QUE LATE EN MÍ ES BUENA Y ESTÁ EN ORDEN</p>
+      <div class="row"><button class="btn primary" id="inv" ${n>=3?"disabled":""}>Lo dije</button><span class="counter">${n} / 3</span></div>
+      ${n>=3?`<p class="say" style="font-size:1.5rem;margin-top:14px">Gracias, Padre.</p>
+      <div class="card" style="margin-top:12px"><p class="decree" style="font-size:1.08rem">${esc(D("renuevo").x)}</p></div>
+      <button class="btn gold full" id="fin" style="margin-top:12px">Hecho</button>`:""}</div>
+    </div>`);
+    const i=$("#inv"); if(i) i.onclick=()=>{n++;draw();};
+    const f=$("#fin"); if(f) f.onclick=()=>{const dd=day();if(!dd.done.includes("corazon"))dd.done.push("corazon");save();closeSheet();toast("Vuelve a tu día con calma.");render();};
+  };
+  draw();
+};
+TOOLFN.perdon=function(){
+  sheet(`<span class="eyebrow">Perdón</span>`,`<div class="stack-lg"><h2>Soltar un rencor</h2>
+   <p class="note">Perdonar no es olvidar ni dar la razón. Es dejar de cargar. (Nada de lo que escribas aquí se guarda.)</p>
+   <div class="step" data-n="1"><b>Recuerda algo bueno.</b><p class="small muted" style="margin-top:4px">${esc(SITUACIONES.find(s=>s.id==="resentimiento").decreto)}</p>
+    <textarea style="margin-top:10px" placeholder="Algo bueno que recuerdo..." aria-label="Algo bueno que recuerdo"></textarea></div>
+   <div class="step" data-n="2"><b>Suéltala.</b><p class="decree" style="margin-top:8px">TE DEJO IR EN PAZ. LO QUE PASÓ YA NO ME ATA.</p>
+    <p class="small muted" style="margin-top:6px">No hace falta sentirlo todavía. Basta con querer soltar.</p></div>
+   <div class="step" data-n="3"><b>Bendice lo mejor de esa persona.</b><p class="decree" style="margin-top:8px;font-size:1.05rem">QUE ENCUENTRES TU PAZ, COMO YO ENCUENTRO LA MÍA.</p></div>
+   <div class="step last" data-n="4"><b>Ciérralo.</b><p class="decree" style="margin-top:8px">ESO YA ESTÁ SUELTO.</p>
+    <p class="small muted" style="margin-top:6px">Si el recuerdo vuelve, no empieces de cero. Repite solo esta frase.</p></div>
+  </div>`);
+};
+TOOLFN.diario=function(){
+  let typ="Cumplido";
+  const draw=()=>{
+    sheet(`<span class="eyebrow">Diario</span>`,`<div class="stack-lg"><h2>Lo que se cumplió</h2>
+     <p class="small muted">Anota lo que se cumplió y da las gracias. Escribe sobre el resultado, no sobre el problema. Si al despertar recuerdas un sueño claro, anótalo también.</p>
+     <div class="chips">${["Cumplido","Gratitud","Sueño"].map(c=>`<button class="chip ${c===typ?"on":""}" data-typ="${c}">${c}</button>`).join("")}</div>
+     <textarea id="dtext" placeholder="${typ==="Sueño"?"Soñé...":typ==="Gratitud"?"Doy gracias por...":"Se cumplió..."}" aria-label="Texto"></textarea>
+     <button class="btn primary" id="dsave">Guardar</button>
+     <div class="stack" style="gap:10px">${S.diary.slice().reverse().map(e=>`<div class="card"><div class="row" style="justify-content:space-between"><span class="eyebrow">${esc(e.typ)} · ${esc(e.date)}</span><button class="del" data-ddel="${e.id}">Quitar</button></div><p style="margin-top:6px;white-space:pre-line">${esc(e.t)}</p></div>`).join("")||`<p class="muted">Aquí irá apareciendo todo lo que se cumpla.</p>`}</div></div>`);
+    document.querySelectorAll("[data-typ]").forEach(b=>b.onclick=()=>{typ=b.dataset.typ;draw();});
+    $("#dsave").onclick=()=>{const v=$("#dtext").value.trim();if(!v)return;S.diary.push({id:Date.now()+"",typ,t:v,date:new Date().toLocaleDateString("es-ES")});save();toast("Gracias.");draw();};
+    document.querySelectorAll("[data-ddel]").forEach(b=>b.onclick=()=>{S.diary=S.diary.filter(x=>x.id!==b.dataset.ddel);save();draw();});
+  };
+  draw();
+};
+TOOLFN.puntos=function(){
+  const draw=()=>{
+    const w=S.puntos[WEEK]||[];
+    sheet(`<span class="eyebrow">Revisión de esta semana</span>`,`<div class="stack-lg"><h2>Revisión semanal</h2>
+     <p class="small muted">Una vez por semana, repasa estas preguntas. No es un examen: es para ver dónde poner la atención.</p>
+     <p><span class="counter">${w.length}</span> <span class="muted">de ${REVISION.length} esta semana</span></p>
+     <div class="card">${REVISION.map((p,i)=>`<div class="item ${w.includes(i)?"done":""}"><button class="check ${w.includes(i)?"on":""}" data-p="${i}" aria-label="Punto ${i+1}"></button><p class="lbl" style="font-size:.95rem">${i+1}. ${esc(p)}</p></div>`).join("")}</div></div>`);
+    document.querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>{const i=+b.dataset.p;const a=S.puntos[WEEK]||(S.puntos[WEEK]=[]);const k=a.indexOf(i);k<0?a.push(i):a.splice(k,1);save();draw();});
+  };
+  draw();
+};
+TOOLFN.palabra=function(){
+  const days=Object.entries(S.neg).sort().slice(-7);
+  sheet(`<span class="eyebrow">Cada palabra cuenta</span>`,`<div class="stack-lg"><h2>Cuidar la palabra</h2>
+   <p class="small">Durante un día entero, presta atención a todo lo que dices. Te sorprenderá cuántas frases van en contra de lo que deseas.</p>
+   <div class="card stack" style="gap:8px">${FRASES_NEGATIVAS.map(f=>`<p class="small">“${esc(f)}”</p>`).join("")}</div>
+   <div class="card"><span class="eyebrow">Últimos días</span>${days.length?days.map(([d,n])=>`<div class="row" style="justify-content:space-between;padding-top:8px"><span class="small">${esc(d)}</span><b style="font-variant-numeric:tabular-nums">${n}</b></div>`).join(""):`<p class="small muted" style="margin-top:6px">Cada vez que te des cuenta de una frase negativa y la corrijas, pulsa “Corregí una” en Hoy.</p>`}</div>
+   <p class="note">No te vigiles con dureza. Darte cuenta ya es suficiente: con el tiempo empezarás a corregirte antes de decirlo.</p>
+   <button class="btn primary full" data-sit="negativo">Corregí una ahora</button></div>`);
+};
+function reduce(n){while(n>9&&n!==11&&n!==22){n=String(n).split("").reduce((a,b)=>a+ +b,0);}return n;}
+function letterVal(c){const i="ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(c);return i<0?0:(i%9)+1;}
+TOOLFN.numero=function(){
+  const caras=v=>{const a=NUMERO.n[v];return `<div class="three" style="margin-top:10px"><p><b>Luz</b> ${esc(a.luz)}</p><p><b>Sombra</b> ${esc(a.sombra)}</p></div>`;};
+  const pos=(v,eye,title,expl,key)=>{const a=NUMERO.n[v];return `<div class="npos"><div class="hd"><div class="v">${v}</div><div><span class="eyebrow">${eye}</span><h3>${title} · ${esc(a.e)}</h3></div></div>
+     <p class="small muted" style="margin-top:8px">${expl}</p><p style="margin-top:8px">${esc(a[key])}</p>${caras(v)}</div>`;};
+  const draw=R=>{
+    let res="";
+    if(R){
+      const p=[pos(R.alma,"Suma de tus vocales","Número del alma","Lo que deseas en lo más hondo.","alma"),
+        pos(R.pers,"Suma de tus consonantes","Número de la personalidad","Cómo te ves cuando nadie te mira, y cómo te perciben al principio.","pers"),
+        pos(R.expr,"Suma de todas las letras","Número de expresión","Tus talentos naturales y el tipo de trabajo donde te sientes cómoda.","expr")];
+      if(R.camino) p.push(pos(R.camino,"Suma de tu fecha de nacimiento","Camino de vida","Lo que vienes a aprender en esta vida.","camino"));
+      const hasM=[R.alma,R.pers,R.expr,R.camino].some(v=>v===11||v===22);
+      res=`<div class="card">${p.join("")}</div>${hasM?`<p class="note">${esc(NUMERO.maestros)}</p>`:""}`;
+    }
+    sheet(`<span class="eyebrow">Numerología</span>`,`<div class="stack-lg"><h2>Mis números</h2>
+     <p class="note">${esc(NUMERO.intro)}</p>
+     <label class="f">Nombre completo, como figura en tu partida de nacimiento<input type="text" id="nm" value="${esc(S.numName||"")}" placeholder="Nombre y apellidos"></label>
+     <label class="f">Fecha de nacimiento<input type="date" id="nd" value="${esc(S.numDate||"")}"></label>
+     <button class="btn primary" id="calc">Calcular</button>
+     ${res}
+     ${R?`<p class="small muted">Cómo se calcula: cada letra vale según su posición (A, J, S = 1; B, K, T = 2; C, L, U = 3...). Se suman y se reducen a una cifra, salvo el 11 y el 22. El camino de vida suma el día, el mes y el año de nacimiento.</p>`:""}</div>`);
+    $("#calc").onclick=()=>{
+      const name=$("#nm").value, date=$("#nd").value; S.numName=name; S.numDate=date; save();
+      const letters=name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/Ñ/g,"N").replace(/[^A-Z]/g,"");
+      if(!letters){toast("Escribe tu nombre completo");return;}
+      const isV=c=>"AEIOU".includes(c);
+      const sum=f=>reduce([...letters].filter(f).reduce((a,c)=>a+letterVal(c),0))||1;
+      const R={alma:sum(isV),pers:sum(c=>!isV(c)),expr:sum(()=>true)};
+      if(date){const [y,m,d]=date.split("-").map(Number);R.camino=reduce(reduce(m)+reduce(d)+reduce(String(y).split("").reduce((a,b)=>a+ +b,0)));}
+      draw(R);
+    };
+  };
+  draw(null);
+};
+TOOLFN.nombre=function(first){
+  S.nameAsked=true; save();
+  sheet(`<span class="eyebrow">${first?"Bienvenida":"Tu nombre"}</span>`,`<div class="stack-lg"><h2>${first?"¿Cómo te llamas?":"Tu nombre"}</h2>
+   <p class="small muted">Lo usamos solo para saludarte. Se guarda en este móvil.</p>
+   <label class="f">Nombre<input type="text" id="nmb" value="${esc(S.name||"")}" placeholder="Tu nombre" autocomplete="given-name"></label>
+   <button class="btn primary full" id="nmsave">Guardar</button>
+   ${first?`<button class="del" id="nmskip" style="align-self:flex-start">Prefiero no decirlo</button>`:""}</div>`);
+  const sv=()=>{S.name=$("#nmb").value.trim().slice(0,40);S.nameAsked=true;save();closeSheet();render();};
+  $("#nmsave").onclick=sv; $("#nmb").onkeydown=e=>{if(e.key==="Enter")sv();};
+  const sk=$("#nmskip"); if(sk) sk.onclick=()=>{S.nameAsked=true;save();closeSheet();};
+};
+TOOLFN.copia=function(){
+  sheet(`<span class="eyebrow">Tus datos</span>`,`<div class="stack-lg"><h2>Copia de seguridad</h2>
+   <p class="small muted">Todo se guarda solo en este navegador. Copia este texto y guárdalo en una nota. Para recuperar tus datos, pégalo y pulsa Restaurar.</p>
+   <textarea id="bk" style="min-height:160px;font-size:.8rem">${esc(JSON.stringify(S))}</textarea>
+   <div class="row"><button class="btn primary" id="cp">Copiar</button><button class="btn" id="rs">Restaurar</button></div></div>`);
+  $("#cp").onclick=()=>{const v=$("#bk").value;navigator.clipboard.writeText(v).then(()=>toast("Copiado")).catch(()=>{$("#bk").select();toast("Selecciona y copia el texto");});};
+  $("#rs").onclick=()=>{try{const o=JSON.parse($("#bk").value);S=Object.assign(defaults(),o);save();toast("Restaurado");closeSheet();render();}catch(e){toast("Ese texto no es una copia válida");}};
+};
+
+/* ---------- ESTUDIO ---------- */
+function viewEstudio(){
+  return `<div class="stack-lg"><header class="stack" style="gap:8px"><span class="eyebrow">Entender para practicar mejor</span><h1>Estudio</h1></header>
+   ${ctxBox("estudio")}
+   <section class="stack"><h2>Entender el porqué</h2><p class="small muted">Para no repetir los decretos de forma mecánica.</p>
+     <div class="card">${GLOSARIO.map(g=>`<details class="gl"><summary><b>${esc(g.t)}</b><small>${esc(g.s)}</small></summary><div class="texto">${paras(g.x)}</div></details>`).join("")}</div></section>
+   <section class="stack"><h2>Los 7 Principios</h2>${ctxBox("principios")}${PRINCIPIOS.map((p,i)=>`<div class="card"><span class="eyebrow">${i+1} · ${esc(p.n)}</span><p class="quote" style="margin:6px 0">${esc(p.l)}</p><p class="small">${esc(p.x)}</p>${PRACTICA[p.n]?`<p class="pract"><b>En el día a día:</b> ${esc(PRACTICA[p.n])}</p>`:""}</div>`).join("")}</section>
+   <section class="stack"><h2>La semana</h2>${ctxBox("dias")}${DIAS.map(r=>`<div class="card ray" style="--ray:${r.hex}"><span class="eyebrow">${esc(r.dia)}</span><h3>${esc(r.q)}</h3><p class="small" style="margin-top:4px">${esc(r.x)}</p><p class="small muted" style="margin-top:4px">${esc(r.d)}</p></div>`).join("")}</section>
+   <section class="stack"><h2>Pensamientos para releer</h2><div class="card stack" style="gap:12px">${LECTURAS.map(l=>`<p>${esc(l)}</p>`).join('<div class="hr"></div>')}</div></section>
+   <p class="small muted">Textos originales de Decreta. Las citas bíblicas son de la Reina-Valera 1909. Esta app es una práctica espiritual y no sustituye la atención médica ni psicológica.</p></div>`;
+}
+
+/* ---------- Contexto ---------- */
+const ctxOpen={};
+function ctxBox(key){const c=CTX_SECCION[key]; if(!c) return "";
+  return `<details class="ctx" data-ctxk="${key}" ${ctxOpen[key]?"open":""}><summary><span>De qué va esto</span><b>${esc(c.t)}</b></summary><div class="texto">${paras(c.x)}</div></details>`;}
+document.addEventListener("toggle",e=>{const d=e.target; if(d&&d.dataset&&d.dataset.ctxk) ctxOpen[d.dataset.ctxk]=d.open;},true);
+function decCtx(id){const c=CTX_DECRETO[id]; if(!c) return "";
+  return `<div class="dctx"><p><b>Para qué sirve.</b> ${esc(c.p)}</p><p><b>Cuándo usarlo.</b> ${esc(c.c)}</p></div>`;}
+function openTool(k){sheetKey=k; TOOLFN[k]();}
+
+/* ---------- En marcha ---------- */
+function daysSince(d){return Math.max(0,Math.round((new Date(TODAY)-new Date(d))/864e5));}
+function cursoCard(){
+  if(!S.curso.length) return "";
+  return `<section class="card"><div class="routine-head"><h2>En marcha</h2><span class="prog">${S.curso.length}</span></div>
+   <p class="small muted" style="margin-top:4px">Ya están declarados. No los repitas: cuando vengan a tu mente, da las gracias. Cuando se cumplan, márcalos.</p>
+   ${S.curso.map(c=>{const n=daysSince(c.date);return `<div class="curso"><button class="lbl" data-copen="${c.id}" style="text-align:left;background:none;border:0;padding:0"><b>${esc(c.t)}</b>${c.a?` · <span>${esc(c.a)}</span>`:""}<small class="muted" style="display:block">${n===0?"Hecho hoy":n===1?"Hecho ayer":"Hecho hace "+n+" días"}</small></button>
+     <div class="row"><button class="btn" data-cgr="${c.id}">Gracias</button><button class="btn primary" data-cman="${c.id}">Se cumplió</button></div></div>`}).join("")}</section>`;
+}
+function showCurso(c){
+  sheetKey=null;
+  sheet(`<span class="eyebrow">En marcha</span>`,`<div class="stack-lg"><h2>${esc(c.t)}${c.a?" · "+esc(c.a):""}</h2>
+   <p>Ya lo declaraste ${daysSince(c.date)===0?"hoy":"hace "+daysSince(c.date)+" días"}. Repetirlo con angustia sería desenterrar la semilla para ver si ha brotado.</p>
+   <div class="card" style="background:var(--violet-soft)"><span class="eyebrow">Cuando vuelva a tu mente</span><p class="decree" style="margin-top:6px">${esc(FORMULA.yaEnMarcha)}</p><div class="vrow">${sayBtn("txt:tat")}</div></div>
+   <p class="small muted">Dar las gracias sí puedes hacerlo todas las veces que quieras: eso suma.</p>
+   <button class="btn primary full" data-cman="${c.id}">Se cumplió</button>
+   ${c.sit!=="mine"?`<button class="btn full" id="nuevo">Es un asunto distinto: empezar de nuevo</button>`:""}
+   <button class="del" id="quitar" style="align-self:flex-start">Quitar de “En marcha” sin marcarlo</button></div>`);
+  const nv=$("#nuevo"); if(nv) nv.onclick=()=>openSit(c.sit,true);
+  $("#quitar").onclick=()=>{S.curso=S.curso.filter(x=>x.id!==c.id);save();closeSheet();render();};
+}
+function manifest(cid){
+  const c=S.curso.find(x=>x.id===cid); if(!c) return;
+  S.curso=S.curso.filter(x=>x.id!==cid);
+  S.diary.push({id:Date.now()+"",typ:"Cumplido",t:"Se cumplió: "+c.t+(c.a?" ("+c.a+")":"")+". Declarado el "+c.date+".",date:new Date().toLocaleDateString("es-ES")});
+  save(); closeSheet(); toast("¡Gracias! Guardado en Lo que se cumplió."); render();
+}
+
+/* ---------- Voz ---------- */
+const sayBtn=(src,label)=>`<button class="vbtn play" data-say="${esc(src)}">▶ ${label||"Escuchar"}</button>`;
+function recBtns(id){
+  if(recState&&recState.id===id) return `<button class="vbtn rec on" data-rec="${esc(id)}">■ Parar grabación</button>`;
+  if(S.recs.includes(id)) return `<button class="vbtn" data-myplay="${esc(id)}">▶ Mi voz</button><button class="vbtn" data-mydel="${esc(id)}">Borrar mi voz</button>`;
+  return `<button class="vbtn rec" data-rec="${esc(id)}">● Grabar con mi voz</button>`;
+}
+const hasTTS=()=>"speechSynthesis" in window;
+function esVoices(){try{return speechSynthesis.getVoices().filter(v=>/^es/i.test(v.lang));}catch(e){return [];}}
+function pickVoice(){const vs=esVoices();return vs.find(v=>v.name===S.voz.voice)||vs.find(v=>/es[-_]ES/i.test(v.lang)&&/(enhanced|mejorad|premium|siri)/i.test(v.name))||vs.find(v=>/es[-_]ES/i.test(v.lang))||vs[0]||null;}
+if(hasTTS()){try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>{if(sheetKey==="voz")openTool("voz");};}catch(e){}}
+const cleanTxt=s=>String(s).replace(/\([^)]*\)/g," ").replace(/[“”"«»*]/g,"").replace(/\s+/g," ").trim();
+function chunk(s){const out=[];let cur="";cleanTxt(s).split(/(?<=[.!?;:])\s+/).forEach(p=>{if((cur+" "+p).length>220&&cur){out.push(cur);cur=p;}else cur=cur?cur+" "+p:p;});if(cur)out.push(cur);return out;}
+let Q=[],qi=0,speaking=false,paused=false,wl=null,label="",myAudio=null;
+function textFor(src){
+  const [k,id]=[src.slice(0,src.indexOf(":")),src.slice(src.indexOf(":")+1)];
+  if(k==="dec"){const d=D(id);return d?{l:d.t,parts:[d.x]}:null;}
+  if(k==="sit"){const s=SITUACIONES.find(x=>x.id===id);return {l:s.titulo,parts:["Esto no es para mí.",s.decreto,THANKS]};}
+  if(k==="dia"){const r=DIAS[+id];return {l:r.q,parts:[r.d]};}
+  if(k==="rut"){const items=ROUTINE[id]||[];const parts=items.filter(i=>!i.go).map(i=>i.d?D(i.d).x:i.x);return {l:"Rutina de "+id.toLowerCase(),parts};}
+  if(k==="txt"){if(id==="tat")return {l:"Ya está en marcha",parts:[FORMULA.yaEnMarcha]};for(const items of Object.values(ROUTINE)){const it=items.find(x=>x.k===id);if(it&&it.x)return {l:it.t,parts:[it.x]};}}
+  return null;
+}
+function speakSrc(src){const r=textFor(src);if(r)speak(r.parts,r.l);}
+function speak(parts,l){
+  if(!hasTTS()){toast("Este navegador no tiene voz disponible");return;}
+  stopSpeak(true);
+  Q=[];const rep=S.voz.rep||1;
+  for(let r=0;r<rep;r++) parts.forEach(p=>{chunk(p).forEach(c=>Q.push(c));Q.push(null);});
+  qi=0;speaking=true;paused=false;label=l+(rep>1?" · "+rep+" veces":"");
+  lockScreen();renderPlayer();nextChunk();
+}
+function nextChunk(){
+  if(!speaking||paused) return;
+  if(qi>=Q.length){stopSpeak();return;}
+  const c=Q[qi++];
+  if(c===null){setTimeout(nextChunk,1100);return;}
+  const u=new SpeechSynthesisUtterance(c);const v=pickVoice();u.lang=v?v.lang:"es-ES";if(v)u.voice=v;u.rate=S.voz.rate||0.9;u.pitch=1;
+  u.onend=()=>{if(speaking&&!paused)nextChunk();};
+  u.onerror=()=>{if(speaking&&!paused)nextChunk();};
+  speechSynthesis.speak(u);
+}
+function pauseSpeak(){if(myAudio){myAudio.paused?myAudio.play():myAudio.pause();renderPlayer();return;}
+  if(!paused){paused=true;qi=Math.max(0,qi-1);while(qi>0&&Q[qi]===null)qi--;try{speechSynthesis.cancel();}catch(e){}}else{paused=false;nextChunk();}renderPlayer();}
+function stopSpeak(silent){speaking=false;paused=false;Q=[];try{speechSynthesis.cancel();}catch(e){}
+  if(myAudio){try{myAudio.pause();}catch(e){}myAudio=null;}
+  try{wl&&wl.release();}catch(e){}wl=null;if(!silent)renderPlayer();}
+async function lockScreen(){try{wl=await navigator.wakeLock.request("screen");}catch(e){}}
+function renderPlayer(){
+  const p=$("#player"); const on=speaking||!!myAudio;
+  p.hidden=!on; if(!on){p.innerHTML="";return;}
+  const isPaused=myAudio?myAudio.paused:paused;
+  p.innerHTML=`<div class="in"><p>${myAudio?"Tu voz":"Leyendo"} · ${esc(label)}</p><button id="pp">${isPaused?"Seguir":"Pausa"}</button><button id="st">Parar</button></div>`;
+  $("#pp").onclick=pauseSpeak; $("#st").onclick=()=>stopSpeak();
+}
+/* grabaciones propias (IndexedDB, solo en este móvil) */
+const IDB={db:null,
+  open(){return new Promise((res,rej)=>{if(this.db)return res(this.db);try{const r=indexedDB.open("decreta",1);r.onupgradeneeded=()=>r.result.createObjectStore("rec");r.onsuccess=()=>{this.db=r.result;res(this.db);};r.onerror=()=>rej(r.error);}catch(e){rej(e);}});},
+  async tx(mode,fn){const db=await this.open();return new Promise((res,rej)=>{const st=db.transaction("rec",mode).objectStore("rec");const q=fn(st);q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error);});},
+  get(k){return this.tx("readonly",s=>s.get(k));},put(k,v){return this.tx("readwrite",s=>s.put(v,k));},del(k){return this.tx("readwrite",s=>s.delete(k));}
+};
+let recState=null;
+async function toggleRec(id){
+  if(recState&&recState.id===id){try{recState.mr.stop();}catch(e){}return;}
+  if(recState){toast("Ya estás grabando otro decreto");return;}
+  if(!navigator.mediaDevices||!window.MediaRecorder){toast("Este navegador no permite grabar. Ábrela desde la app instalada o Safari.");return;}
+  try{
+    stopSpeak();
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    const type=MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported("audio/mp4")?"audio/mp4":"";
+    const mr=type?new MediaRecorder(stream,{mimeType:type}):new MediaRecorder(stream);
+    const chunks=[];mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};
+    mr.onstop=async()=>{stream.getTracks().forEach(tr=>tr.stop());const blob=new Blob(chunks,{type:mr.mimeType||type||"audio/webm"});recState=null;
+      try{await IDB.put(id,blob);if(!S.recs.includes(id))S.recs.push(id);save();toast("Grabado con tu voz");}catch(e){toast("No se pudo guardar la grabación");}
+      refreshSheetOrView();};
+    recState={id,mr};mr.start();toast("Grabando… lee el decreto en voz alta");refreshSheetOrView();
+  }catch(e){recState=null;toast("Necesito permiso para usar el micrófono");}
+}
+function refreshSheetOrView(){
+  // vuelve a pintar los botones de grabación donde estén
+  document.querySelectorAll("[data-rec],[data-myplay]").forEach(b=>{const id=b.dataset.rec||b.dataset.myplay;const row=b.parentElement;if(!row)return;
+    row.querySelectorAll("[data-rec],[data-myplay],[data-mydel]").forEach(x=>x.remove());row.insertAdjacentHTML("beforeend",recBtns(id));});
+}
+async function playMine(id){
+  try{const blob=await IDB.get(id);if(!blob){toast("No encuentro la grabación");S.recs=S.recs.filter(x=>x!==id);save();return;}
+    stopSpeak(true);let n=0;const rep=S.voz.rep||1;const d=D(id);label=(d?d.t:"Mi decreto")+(rep>1?" · "+rep+" veces":"");
+    myAudio=new Audio(URL.createObjectURL(blob));
+    myAudio.onended=()=>{n++;if(n<rep&&myAudio){setTimeout(()=>{myAudio&&myAudio.play();},1100);}else{myAudio=null;try{wl&&wl.release()}catch(e){}renderPlayer();}};
+    lockScreen();await myAudio.play();renderPlayer();
+  }catch(e){toast("No se pudo reproducir");}
+}
+async function delMine(id){try{await IDB.del(id);}catch(e){}S.recs=S.recs.filter(x=>x!==id);save();refreshSheetOrView();toast("Grabación borrada");}
+TOOLFN.voz=function(){
+  const vs=hasTTS()?esVoices():[];const cur=pickVoice();
+  sheet(`<span class="eyebrow">Voz</span>`,`<div class="stack-lg"><h2>Voz y grabaciones</h2>
+   <p class="small">Repetir un decreto hasta sabértelo hace que te salga solo cuando lo necesitas. Aquí ajustas cómo te lee la app los decretos, y puedes grabarlos con tu propia voz: tu voz es la que más te convence.</p>
+   ${!hasTTS()?`<p class="note">Este navegador no tiene voz. Ábrela en Safari o desde la app instalada.</p>`:`
+   <label class="f">Voz${vs.length?`<select id="vsel">${vs.map(v=>`<option value="${esc(v.name)}" ${cur&&cur.name===v.name?"selected":""}>${esc(v.name)} · ${esc(v.lang)}</option>`).join("")}</select>`:`<span class="small">Cargando voces… si no aparece ninguna, cierra y vuelve a abrir esta pantalla.</span>`}</label>
+   <label class="f">Velocidad: <b id="rv">${(S.voz.rate||0.9).toFixed(2)}</b><input type="range" id="rate" min="0.6" max="1.2" step="0.05" value="${S.voz.rate||0.9}"></label>
+   <label class="f">Repetir cada decreto<select id="rep">${[1,3,7].map(n=>`<option value="${n}" ${S.voz.rep===n?"selected":""}>${n===1?"Una vez":n+" veces"}</option>`).join("")}</select></label>
+   <button class="btn primary" id="prueba">Probar la voz</button>
+   <p class="small muted">Para una voz más natural en el iPhone: Ajustes › Accesibilidad › Contenido leído › Voces › Español (España). Descarga Mónica o Jorge en versión mejorada y luego elígela aquí.</p>`}
+   <div class="card stack" style="gap:8px"><span class="eyebrow">Tus grabaciones · ${S.recs.length}</span>
+    ${S.recs.length?S.recs.map(id=>{const d=D(id);return `<div class="row" style="justify-content:space-between"><span class="small" style="flex:1;min-width:0">${esc(d?d.t:id)}</span><span class="vrow" style="margin:0"><button class="vbtn" data-myplay="${esc(id)}">▶ Mi voz</button><button class="vbtn" data-mydel="${esc(id)}">Borrar mi voz</button></span></div>`}).join(""):`<p class="small muted">Abre cualquier decreto y pulsa “Grabar con mi voz”. La grabación se guarda solo en este móvil.</p>`}</div>
+   <p class="small muted">Si bloqueas la pantalla, el iPhone puede cortar la voz. Mientras suena, la app intenta mantener la pantalla encendida.</p></div>`);
+  const vsel=$("#vsel"); if(vsel) vsel.onchange=e=>{S.voz.voice=e.target.value;save();};
+  const r=$("#rate"); if(r) r.oninput=e=>{S.voz.rate=+e.target.value;$("#rv").textContent=S.voz.rate.toFixed(2);save();};
+  const rp=$("#rep"); if(rp) rp.onchange=e=>{S.voz.rep=+e.target.value;save();};
+  const pr=$("#prueba"); if(pr) pr.onclick=()=>speak(["YO SOY paz. YO SOY luz. YO SOY abundancia."],"Prueba");
+};
+
+/* ---------- Hoja ---------- */
+let onClose=null;
+let sheetKey=null;
+function sheet(head,body,cleanup){
+  if(cleanup!==undefined) onClose=cleanup;
+  if(sheetKey) body=`<div style="margin-bottom:16px">${ctxBox(sheetKey)}</div>`+body;
+  const prev=document.querySelector(".sheet"); const sc=prev?prev.scrollTop:0;
+  $("#layer").innerHTML=`<div class="sheet-wrap" id="sw"><div class="sheet" role="dialog" aria-modal="true"><div class="sheet-top">${head}<button class="x" id="cls" aria-label="Cerrar">×</button></div>${body}</div></div>`;
+  if(prev) document.querySelector(".sheet").scrollTop=sc;
+  $("#cls").onclick=closeSheet; $("#sw").onclick=e=>{if(e.target.id==="sw")closeSheet();};
+  document.body.style.overflow="hidden";
+}
+function closeSheet(){ sheetKey=null; if(onClose){try{onClose()}catch(e){} onClose=null;} $("#layer").innerHTML=""; document.body.style.overflow=""; }
+function openReading(i){
+  if(i.go){ openTool(i.go); return; }
+  sheetKey=null;
+  const d=i.d?D(i.d):null;
+  sheet(`<span class="eyebrow">${esc(d?d.f:"Rutina")}</span>`,`<div class="stack"><h2>${esc(d?d.t:i.t)}</h2>${d?decCtx(d.id):""}<div class="texto decree" style="font-size:1.15rem">${paras(d?d.x:i.x)}</div><div class="vrow">${d?sayBtn("dec:"+d.id)+recBtns(d.id):sayBtn("txt:"+i.k)}</div>${markBtn(i.k)}</div>`);
+  bindMark(i.k);
+}
+const markBtn=k=>day().done.includes(k)?`<p class="small muted">Hecho hoy.</p>`:`<button class="btn gold full" id="mark">Hecho</button>`;
+function bindMark(k){const m=$("#mark"); if(m) m.onclick=()=>{const dd=day(); if(!dd.done.includes(k)) dd.done.push(k); save(); closeSheet(); render();};}
+
+/* ---------- Eventos ---------- */
+document.addEventListener("click",e=>{
+  const t=e.target;
+  const sit=t.closest("[data-sit]"); if(sit){openSit(sit.dataset.sit);return;}
+  const chk=t.closest("[data-chk]"); if(chk){const dd=day(),k=chk.dataset.chk,i=dd.done.indexOf(k);i<0?dd.done.push(k):dd.done.splice(i,1);save();render();return;}
+  const op=t.closest("[data-open-r]"); if(op){const k=op.dataset.openR;for(const items of Object.values(ROUTINE)){const it=items.find(x=>x.k===k);if(it){openReading(it);break;}}return;}
+  const cat=t.closest("[data-cat]"); if(cat){decCat=cat.dataset.cat;openDec=null;render();return;}
+  const dec=t.closest("[data-dec]"); if(dec){openDec=openDec===dec.dataset.dec?null:dec.dataset.dec;render();return;}
+  const fav=t.closest("[data-fav]"); if(fav){const k=fav.dataset.fav,i=S.fav.indexOf(k);i<0?S.fav.push(k):S.fav.splice(i,1);save();render();return;}
+  const md=t.closest("[data-mood]"); if(md){const k=md.dataset.mood;(S.mood[TODAY]||(S.mood[TODAY]=[])).push(k);save();render();
+    if(k==="paz"){const d=D("lodesiempre");sheet(`<span class="eyebrow">En paz</span>`,`<div class="stack"><h2>Quédate en ese ánimo</h2><p class="small muted">Disfrútalo y da las gracias.</p><div class="texto decree" style="font-size:1.15rem">${paras(d.x)}</div><div class="texto decree" style="font-size:1.05rem">${paras(D("compromisos").x)}</div></div>`);}
+    else if(k==="prisa") openTool("latido");
+    else if(k==="temor") openSit("temor");
+    else sheet(`<span class="eyebrow">Baja</span>`,`<div class="stack"><h2>¿Qué está pasando?</h2><div class="grid2"><button class="sit" data-sit="tristeza"><b>Tristeza</b><small>Pena, desánimo</small></button><button class="sit" data-sit="escasez"><b>Falta de dinero</b><small>Deudas, aprieto</small></button></div></div>`);
+    return;}
+  const dm=t.closest("[data-dismiss]"); if(dm){(S.dismiss[TODAY]||(S.dismiss[TODAY]=[])).push(dm.dataset.dismiss);save();render();return;}
+  const cp=t.closest("[data-copy]"); if(cp){const d=D(cp.dataset.copy);navigator.clipboard.writeText(shareText(d)).then(()=>toast("Copiado")).catch(()=>toast("No se pudo copiar; mantén pulsado el texto"));return;}
+  const tool=t.closest("[data-tool]"); if(tool){openTool(tool.dataset.tool);return;}
+  const say=t.closest("[data-say]"); if(say){speakSrc(say.dataset.say);return;}
+  const rc=t.closest("[data-rec]"); if(rc){toggleRec(rc.dataset.rec);return;}
+  const mp=t.closest("[data-myplay]"); if(mp){playMine(mp.dataset.myplay);return;}
+  const mdl=t.closest("[data-mydel]"); if(mdl){delMine(mdl.dataset.mydel);return;}
+  const cg=t.closest("[data-cgr]"); if(cg){toast("Ya está en marcha. Gracias.");return;}
+  const cmn=t.closest("[data-cman]"); if(cmn){manifest(cmn.dataset.cman);return;}
+  const cop=t.closest("[data-copen]"); if(cop){const c=S.curso.find(x=>x.id===cop.dataset.copen);if(c)showCurso(c);return;}
+  if(t.id==="theme"){S.theme=S.theme===""?"dark":S.theme==="dark"?"light":"";S.theme?document.documentElement.setAttribute("data-theme",S.theme):document.documentElement.removeAttribute("data-theme");save();render();}
+});
+document.addEventListener("input",e=>{if(e.target.id==="q"){decQ=e.target.value;const pos=e.target.selectionStart;render();const q=$("#q");q.focus();q.setSelectionRange(pos,pos);}});
+
+function render(){
+  renderTabs();
+  $("#app").innerHTML=tab==="hoy"?viewHoy():tab==="acepto"?viewAcepto():tab==="decretos"?viewDecretos():tab==="herr"?viewHerr():viewEstudio();
+}
+render();
+if(!S.nameAsked) TOOLFN.nombre(true);
+})();
+</script>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));}</script>
+</body>
+</html>
